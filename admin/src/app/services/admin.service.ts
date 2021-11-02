@@ -35,32 +35,32 @@ export class AdminService {
   public IsAuthenticated(allowRoles : string[]) :boolean{
 
 
-    const token = localStorage.getItem('token'); /*  y acá el any */
-    
+      const token = localStorage.getItem('token'); /*  y acá el any */
+      
 
 
-      if(!token){
-        return false;  /*aca era el true*/
-      }
-
-      try{
-        const helper = new JwtHelperService();
-        var decodedToken = helper.decodeToken(token);
-
-        console.log(decodedToken);
-
-        if(!decodedToken){
-          console.log('NO ACCESOO');
-          localStorage.removeItem('token');
-          return false;
-        
+        if(!token){
+          return false;  /*aca era el true*/
         }
 
-      }catch(error){
-        localStorage.removeItem('token');
-        return false;
+        try{
+          const helper = new JwtHelperService();
+          var decodedToken = helper.decodeToken(token);
 
-      }
-      return allowRoles.includes(decodedToken['role']);
-  }
+          console.log(decodedToken);
+
+          if(!decodedToken){
+            console.log('NO ACCESOO');
+            localStorage.removeItem('token');
+            return false;
+          
+          }
+
+        }catch(error){
+          localStorage.removeItem('token');
+          return false;
+
+        }
+        return allowRoles.includes(decodedToken['role']);
+    }
 }
