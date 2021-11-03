@@ -34,33 +34,29 @@ export class AdminService {
 
   public IsAuthenticated(allowRoles : string[]) :boolean{
 
-
-      const token = localStorage.getItem('token'); /*  y acá el any */
-      
-
-
-        if(!token){
-          return false;  /*aca era el true*/
-        }
-
-        try{
-          const helper = new JwtHelperService();
-          var decodedToken = helper.decodeToken(token);
-
-          console.log(decodedToken);
-
-          if(!decodedToken){
-            console.log('NO ACCESOO');
-            localStorage.removeItem('token');
-            return false;
-          
-          }
-
-        }catch(error){
-          localStorage.removeItem('token');
-          return false;
-
-        }
-        return allowRoles.includes(decodedToken['role']);
+    const token:any = localStorage.getItem('token');
+    
+    if(!token){
+      return false;
     }
+
+    try {
+      const helper = new JwtHelperService();
+      var decodedToken = helper.decodeToken(token);
+
+      console.log(decodedToken);
+
+      if(!decodedToken){
+        console.log('noacceso');
+        localStorage.removeItem('token');
+        return false;  
+      }
+    } catch (error) {
+      localStorage.removeItem('token');
+      return false;
+    }
+
+    return allowRoles.includes(decodedToken['role']);
+
+  }
 }
