@@ -35,7 +35,6 @@ export class AdminService {
   public IsAuthenticated(allowRoles : string[]) :boolean{
 
     const token:any = localStorage.getItem('token');
-    
     if(!token){
       return false;
     }
@@ -43,7 +42,6 @@ export class AdminService {
     try {
       const helper = new JwtHelperService();
       var decodedToken = helper.decodeToken(token);
-
       console.log(decodedToken);
 
       if(!decodedToken){

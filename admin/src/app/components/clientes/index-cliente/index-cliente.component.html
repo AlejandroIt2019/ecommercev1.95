@@ -1,0 +1,72 @@
+<app-sidebar></app-sidebar>
+
+ <!-- Page title-->
+ <div class="border-bottom pt-5 mt-2 mb-5">
+    <h1 class="mt-2 mt-md-4 mb-3 pt-5">Clientes</h1>
+    <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+      <p class="text-muted">Este módulo lista todos los clientes de la tienda.</p>
+      <p class="font-size-sm font-weight-medium pl-md-4"><a class="text-nowrap" href="https://getbootstrap.com/docs/4.5/components/forms/" target="_blank" rel="noopener">Registrar nuevo<i class="cxi-angle-right font-size-base align-middle ml-1"></i></a></p>
+    </div>
+  </div>
+
+  <div class="card box-shadow-sm">
+        <div class="card-header">
+            <h5 style="margin-bottom: 0px;">Filtro de clientes</h5>
+        </div>
+        <div class="card-header">
+            <form class="form-inline pt-2">
+                <label class="sr-only" for="inline-form-input-name">Apellidos</label>
+                  <input class="form-control mb-3 mr-sm-4" (keyup)="filtro('apellidos')" name="filtro_apellidos" [(ngModel)]="filtro_apellidos" type="text" id="inline-form-input-name" placeholder="Apellidos">
+                <label class="sr-only" for="inline-form-input-username">Correo</label>
+                <div class="input-group mb-3 mr-sm-4">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@</div>
+                </div>
+                  <input class="form-control" type="text" (keyup)="filtro('correo')" name="filtro_correo" [(ngModel)]="filtro_correo" placeholder="Correo">
+                </div>
+            
+                
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>#</th>
+                      <th>Nombres</th>
+                      <th>Apellidos</th>
+                      <th>Correo</th>
+                      <th>Opciones</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let item of clientes | slice: (page-1)*pageSize : (page-1) * pageSize + pageSize; let indice=index">
+                   <tr>
+                     <td>{{indice+1}}</td>
+                      <td>{{item.nombres}}</td>
+                      <td>{{item.apellidos}}</td>
+                      <td>{{item.email}}</td>
+                      <td>
+                        <div class="btn-group dropdown">
+                            <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              OPCIONES
+                            </button>
+                            <div class="dropdown-menu">
+                              <a href="#" class="dropdown-item">Editar clientes</a>
+                              <a href="#" class="dropdown-item">Eliminar clientes</a>
+                            </div>
+                          </div>
+                      </td>
+                   </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+          <ngb-pagination
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [collectionSize]="clientes.length"
+        ></ngb-pagination>
+        </div>
+  </div> 
