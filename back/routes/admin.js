@@ -1,11 +1,12 @@
 'use strict'
 
+//cambie las A para a minisculas
 var express = require('express');
-var AdminController = require('../controllers/AdminController');
+var adminController = require('../controllers/adminController');
 
 var api = express.Router();
 
-api.post('/registro_admin',AdminController.registro_admin);
-api.post('/login_admin',AdminController.login_admin);
+api.post('/registro_admin',adminController.registro_admin);
+api.post('/login_admin',adminController.login_admin);
 
 module.exports = api;

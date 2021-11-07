@@ -53,10 +53,31 @@
                               OPCIONES
                             </button>
                             <div class="dropdown-menu">
-                              <a href="#" class="dropdown-item">Editar clientes</a>
-                              <a href="#" class="dropdown-item">Eliminar clientes</a>
+                              <a class="dropdown-item" [routerLink]="['/panel/clientes',item._id]" >Editar clientes</a>
+                              <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#delete-'+item._id">Eliminar clientes</a>
                             </div>
                           </div>
+                        
+                          <!-- modal afuera del dropdown-->
+                          <div class="modal fade" id="delete-{{item._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Eliminar, {{item.nombres}} {{item.apellidos}}</h4>
+                                  <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">x</span></button>
+                                </div>
+                                <div class="modal-body">
+                                  <p class="fs-sm">Desea eliminar este cliente?</p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                                  <button class="btn btn-primary btn-sm" (click)='eliminar(item._id)' type="button">Sí, eliminar</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- modal afuera del dropdown, quite algo del sm, me parece raro2-->
                       </td>
                    </tr>
                   </tbody>
