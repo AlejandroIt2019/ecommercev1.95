@@ -55,7 +55,12 @@
               
           </div>
           <div class="card-footer">
-              <button class="btn btn-primary mr-3" type="submit" >Crear cliente</button>
+              <button *ngIf="!load_btn"  class="btn btn-primary mr-3" type="submit" >Crear cliente</button>
+              <!-- Button with growing spinner and text -->
+                <button *ngIf="load_btn" type="button" class="btn btn-secondary" disabled>
+                    <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+                    Creando...
+                </button>
               <a [routerLink]="['/panel/clientes']" class="btn btn-warning">Regresar</a>
           </div>
         

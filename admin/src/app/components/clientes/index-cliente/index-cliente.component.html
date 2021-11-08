@@ -41,46 +41,61 @@
                       <th>Opciones</th>
                     </tr>
                   </thead>
-                  <tbody *ngFor="let item of clientes | slice: (page-1)*pageSize : (page-1) * pageSize + pageSize; let indice=index">
-                   <tr>
-                     <td>{{indice+1}}</td>
-                      <td>{{item.nombres}}</td>
-                      <td>{{item.apellidos}}</td>
-                      <td>{{item.email}}</td>
-                      <td>
-                        <div class="btn-group dropdown">
-                            <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              OPCIONES
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" [routerLink]="['/panel/clientes',item._id]" >Editar clientes</a>
-                              <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#delete-'+item._id">Eliminar clientes</a>
-                            </div>
-                          </div>
-                        
-                          <!-- modal afuera del dropdown-->
-                          <div class="modal fade" id="delete-{{item._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h4 class="modal-title">Eliminar, {{item.nombres}} {{item.apellidos}}</h4>
-                                  <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">x</span></button>
-                                </div>
-                                <div class="modal-body">
-                                  <p class="fs-sm">Desea eliminar este cliente?</p>
-                                </div>
-                                <div class="modal-footer">
-                                  <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
-                                  <button class="btn btn-primary btn-sm" (click)='eliminar(item._id)' type="button">Sí, eliminar</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- modal afuera del dropdown, quite algo del sm, me parece raro2-->
+                  <tbody *ngIf="load_data">
+                    <tr>
+                      <td class="text-center" colspan="5">
+                        <!-- Custom size border spinner -->
+                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
                       </td>
-                   </tr>
+                    </tr>
                   </tbody>
+
+                  <ng-container *ngIf="!load_data">
+                    <tbody *ngFor="let item of clientes | slice: (page-1)*pageSize : (page-1) * pageSize + pageSize; let indice=index">
+                      <tr>
+                        <td>{{indice+1}}</td>
+                         <td>{{item.nombres}}</td>
+                         <td>{{item.apellidos}}</td>
+                         <td>{{item.email}}</td>
+                         <td>
+                           <div class="btn-group dropdown">
+                               <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 OPCIONES
+                               </button>
+                               <div class="dropdown-menu">
+                                 <a class="dropdown-item" [routerLink]="['/panel/clientes',item._id]" >Editar clientes</a>
+                                 <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#delete-'+item._id">Eliminar clientes</a>
+                               </div>
+                             </div>
+                           
+                             <!-- modal afuera del dropdown-->
+                             <div class="modal fade" id="delete-{{item._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                               <div class="modal-dialog modal-dialog-centered" role="document">
+                                 <div class="modal-content">
+                                   <div class="modal-header">
+                                     <h4 class="modal-title">Eliminar, {{item.nombres}} {{item.apellidos}}</h4>
+                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                                       aria-hidden="true">x</span></button>
+                                   </div>
+                                   <div class="modal-body">
+                                     <p class="fs-sm">Desea eliminar este cliente?</p>
+                                   </div>
+                                   <div class="modal-footer">
+                                     <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                                     <button class="btn btn-primary btn-sm" (click)='eliminar(item._id)' type="button">Sí, eliminar</button>
+                                   </div>
+                                 </div>
+                               </div>
+                             </div>
+                             <!-- modal afuera del dropdown, quite algo del sm, me parece raro2-->
+                         </td>
+                      </tr>
+                     </tbody>
+                  </ng-container>
+
+                  
                 </table>
             </div>
         </div>
