@@ -25,7 +25,7 @@ export class IndexClienteComponent implements OnInit {
   public pageSize = 5;
   public token;
   public load_data = true;
-
+  // termina paginación
   constructor(
     private _clienteService: ClienteService,
     private _adminService: AdminService
