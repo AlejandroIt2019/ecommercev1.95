@@ -40,7 +40,7 @@ export class ProductoService {
 
       let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
       return this._http.get(this.url + 'listar_productos_admin/'+filtro,{headers: headers});
-  }
+    }
 
   obtener_producto_admin(id:any, token:any):Observable<any>{
 
@@ -67,6 +67,19 @@ export class ProductoService {
       return this._http.put(this.url + 'actualizar_producto_admin/'+id,data,{headers: headers});
     }
    
+  }
+
+
+  eliminar_producto_admin(id:any, token:any):Observable<any>{
+
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
+    return this._http.delete(this.url + 'eliminar_producto_admin/'+id,{headers: headers});
+  }
+
+  listar_inventario_producto_admin(id:any, token:any):Observable<any>{
+
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
+    return this._http.get(this.url + 'listar_inventario_producto_admin/'+id,{headers: headers});
   }
 
 
