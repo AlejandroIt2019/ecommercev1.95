@@ -4,7 +4,8 @@ var Producto = require('../models/producto');
 var Inventario = require('../models/inventario');
 var fs = require('fs');
 var path = require('path');
-const producto = require('../models/producto');
+
+//const producto = require('../models/producto');
 
 
 const registro_producto_admin = async function(req,res){
@@ -16,10 +17,10 @@ const registro_producto_admin = async function(req,res){
             var name = img_path.split('\\');
             var portada_name = name[2];
 
-            data.slug=data.titulo.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
+            data.slug= data.titulo.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
             data.portada = portada_name;
             let reg = await Producto.create(data);
-            //REVISANDO 
+            //inventario modelo 
             let inventario = await Inventario.create({
                 admin: req.user.sub,
                 cantidad: data.stock,
@@ -159,14 +160,90 @@ const eliminar_producto_admin = async function(req,res){
     }
 }
 
+
+/*
 const listar_inventario_producto_admin = async function(req,res){
     if(req.user){
         if(req.user.role =='admin'){
 
             var id= req.params['id'];
-            var reg = await Inventario.find({producto: id}).populate('admin');
+            var reg = await Inventario.find({producto: id});
             res.status(200).send({data:reg});
                     
+        }else{
+            res.status(500).send({message: 'NoAccess'});
+        }
+    }else{
+        res.status(500).send({message: 'NoAccess'});
+    }
+}
+*/
+const listar_inventario_producto_admin = async function(req,res){
+    if(req.user){
+        if(req.user.role =='admin'){
+ 
+            try{
+
+            var id = req.params['_id'];
+            var reg = await Inventario.find({producto: id}).populate('admin').sort({createdAt:-1});
+            res.status(200).send({data:reg});
+            }catch(error){
+                console.log(error);
+            }
+                    
+        }else{
+            res.status(500).send({message: 'NoAccess'});
+        }
+    }else{
+        res.status(500).send({message: 'NoAccess'});
+    }
+} 
+
+
+const eliminar_inventario_producto_admin = async function(req,res){
+    if(req.user){
+        if(req.user.role =='admin'){
+            //obtener id de inventario
+            var id = req.params['id'];
+            //eliminando inventario
+            let reg = await Inventario.findOneAndRemove({_id:id});
+            //obtener registro de producto
+            let prod = await Producto.findById({_id:reg.producto});
+            //calcular nuevo stock parseado
+            let nuevo_stock = parseInt(prod.stock) - parseInt(reg.cantidad);
+            let producto = await Producto.findByIdAndUpdate({_id:reg.producto},{
+                stock: nuevo_stock
+            });
+
+            res.status(200).send({data:producto});
+                                   
+        }else{
+            res.status(500).send({message: 'NoAccess'});
+        }
+    }else{
+        res.status(500).send({message: 'NoAccess'});
+    }
+} 
+
+const registro_inventario_producto_admin = async function(req,res){
+    if(req.user){
+        if(req.user.role =='admin'){
+            
+            let data = req.body;
+            let reg = await Inventario.create(data);
+
+            //obtener registro de producto
+            let prod = await Producto.findById({_id:reg.producto});
+            //calcular nuevo stock parseado, stock actual + aumentado
+            let nuevo_stock = parseInt(prod.stock) + parseInt(reg.cantidad);
+            //actualizar nuevo stock sumado
+            let producto = await Producto.findByIdAndUpdate({_id:reg.producto},{
+                stock: nuevo_stock
+            });
+
+
+            res.status(200).send({data:reg});
+                                
         }else{
             res.status(500).send({message: 'NoAccess'});
         }
@@ -182,7 +259,9 @@ module.exports = {
     obtener_producto_admin,
     actualizar_producto_admin,
     eliminar_producto_admin,
-    listar_inventario_producto_admin
+    listar_inventario_producto_admin,
+    eliminar_inventario_producto_admin,
+    registro_inventario_producto_admin
 }
 
 

@@ -41,6 +41,7 @@ export class UpdateProductoComponent implements OnInit {
       params=>{
         this.id = params['id'];
         console.log(this.id);
+        
         this._productoService.obtener_producto_admin(this.id,this.token).subscribe(
           response=>{
             if(response.data == undefined){
