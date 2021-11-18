@@ -1,0 +1,102 @@
+<app-sidebar></app-sidebar>
+
+<!-- formulario configuraciones-->
+<div class="border-bottom pt-5 mt-2 mb-5">
+  <h1 class="mt-2 mt-md-4 mb-3 pt-5">Configuraciones</h1>
+  <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+    <p class="text-muted">Este módulo se estableve las configuraciones de la tineda.</p>
+
+  </div>
+</div>
+
+<form >
+  <div class="card box-shadow-sm">
+    <div class="card-header">
+        <h5 style="margin-bottom: 0px;">Configuraciones</h5>
+    </div>
+
+    <div class="card-body">
+      <div style="max-width: 48rem;">
+        <div class="form-group row align-items-center">
+          <label class="col-md-3 col-form-label font-weight-medium" for="text-input">Nombre de la tienda</label>
+          <div class="col-md-9">
+            <input class="form-control" type="text" id="text-input" placeholder="Createx" name="titulo" [(ngModel)]="config.titulo">
+          </div>
+        </div>
+        <div class="form-group row align-items-center">
+          <label class="col-md-3 col-form-label font-weight-medium" for="text-input">Facturación</label>
+          <div class="col-md-4">
+            <input class="form-control" type="number" id="text-input" name="serie" [(ngModel)]="config.serie">
+          </div>
+          <div class="col-md-5">
+            <input class="form-control" type="number" id="text-input" name="correlativo" [(ngModel)]="config.correlativo">
+          </div>
+        </div>
+        <div class="form-group row align-items-center">
+          <label class="col-md-3 col-form-label font-weight-medium" for="text-input">Categorías</label>
+          <div class="col-md-4">
+            <input class="form-control" type="text" id="text-input" placeholder="Titulo" name="titulo_cat" [(ngModel)]="titulo_cat">
+   
+          </div>
+          <div class="col-md-5">
+            <input class="form-control" type="text" id="text-input" placeholder="Icono" name="icono_cat" [(ngModel)]="icono_cat">
+          </div>
+          <div class="col-md-3">
+
+          </div>
+          <div class="col-md-9">
+            <a style="cursor: pointer;" (click)="agregar_cat()" class="mb-5">Agregar</a>
+            <div class="table-responsive mt-3">
+              <table class="table table-sm" *ngIf="config.categorias">
+                <thead class="thead-dark">
+                  <tr>
+             
+                    <th>Categoria</th>
+                    <th>Icono</th>
+                   
+                  </tr>
+                </thead>
+                <ng-container *ngIf="config.categorias.length==0" >
+                  <tbody>
+                    <tr>
+                      <td colspan="2" class="tex-center">
+                        <span class="text-muted">No hay categorias disponibles</span>
+                      </td>
+                      
+                    </tr>
+                  </tbody>
+                </ng-container>
+                <ng-container *ngIf="config.categorias.length>=1">
+                  <tbody *ngFor="let item of config.categorias">
+                    <tr>
+                      <td >
+                       {{item.titulo}}
+                      </td>
+                      <td>{{item.icono}}</td>
+                      
+                    </tr>
+                  </tbody>
+                </ng-container>
+              </table>
+            </div>
+          </div>
+         
+        </div>
+        <div class="form-group row align-items-center">
+          <label class="col-md-3 col-form-label font-weight-medium" for="file-input">Logo</label>
+          <div class="col-md-9">
+            <div class="custom-file">
+              <input class="custom-file-input" type="file" id="file-input">
+              <label class="custom-file-label" for="file-input">Buscar</label>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+     
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary mr-3">Guardar cambios</button>
+    </div>
+</div>  
+</form>

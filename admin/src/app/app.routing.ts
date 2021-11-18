@@ -11,6 +11,10 @@ import { CreateProductoComponent } from "./components/productos/create-producto/
 import { IndexProductoComponent } from "./components/productos/index-producto/index-producto.component";
 import { UpdateProductoComponent } from "./components/productos/update-producto/update-producto.component";
 import { InventarioProductoComponent } from "./components/productos/inventario-producto/inventario-producto.component";
+import { CreateCuponComponent } from "./components/cupones/create-cupon/create-cupon.component";
+import { IndexCuponComponent } from "./components/cupones/index-cupon/index-cupon.component";
+import { UpdateCuponComponent } from "./components/cupones/update-cupon/update-cupon.component";
+import { ConfigComponent } from "./components/config/config.component";
 
 const appRoute : Routes = [
     {path: '', redirectTo: 'inicio', pathMatch: 'full'},
@@ -21,12 +25,19 @@ const appRoute : Routes = [
         {path: 'clientes/registro', component: CreateClienteComponent, canActivate: [AdminGuard]},
         {path: 'clientes/:id', component: EditClienteComponent, canActivate: [AdminGuard]},
 
+        //producto rutas
         {path: 'productos/registro', component: CreateProductoComponent, canActivate: [AdminGuard]},
         {path: 'productos', component: IndexProductoComponent, canActivate: [AdminGuard]},
         {path: 'productos/:id', component: UpdateProductoComponent, canActivate: [AdminGuard]},
         {path: 'productos/inventario/:id', component: InventarioProductoComponent, canActivate: [AdminGuard]},
         
+        //cupones
+        {path: 'cupones/registro', component: CreateCuponComponent, canActivate: [AdminGuard]},
+        {path: 'cupones', component: IndexCuponComponent, canActivate: [AdminGuard]},
+        {path: 'cupones/:id', component: UpdateCuponComponent, canActivate: [AdminGuard]},
 
+        //configuracion modulo
+        {path: 'configuraciones', component: ConfigComponent, canActivate: [AdminGuard]},
     ]},
     {path: 'login',component: LoginComponent}
 ]

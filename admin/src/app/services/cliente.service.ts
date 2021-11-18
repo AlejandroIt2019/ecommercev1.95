@@ -57,4 +57,6 @@ listar_inventario_producto_admin(id:any,token:any):Observable<any>{
   
 }
 
+
+
 }
