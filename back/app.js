@@ -11,6 +11,11 @@ var admin_route = require('./routes/admin');
 var producto_route = require('./routes/producto');
 const bodyParser = require('body-parser');
 
+//cupon
+var cupon_route = require('./routes/cupon');
+//config
+var config_route = require('./routes/config');
+
 mongoose.connect('mongodb://127.0.0.1:27017/tienda',(err, res)=>{
 
     if(err){
@@ -41,6 +46,8 @@ app.use((req,res,next)=>{
 app.use('/api',cliente_route);
 app.use('/api',admin_route);
 app.use('/api',producto_route);
+app.use('/api',cupon_route);
+app.use('/api',config_route);
 
 module.exports = app;
 

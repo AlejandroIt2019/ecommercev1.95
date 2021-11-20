@@ -159,7 +159,8 @@ const actualizar_cliente_admin = async function(req,res){
                 email:data.email,
                 telefono:data.telefono,
                 f_nacimiento:data.f_nacimiento,
-                dni:data.dni,
+                rut:data.rut,
+                //dni:data.dni, acá cambie esto
                 genero:data.genero
             })
                       
