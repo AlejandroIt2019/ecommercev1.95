@@ -37,15 +37,12 @@ export class InventarioProductoComponent implements OnInit {
     this._route.params.subscribe(
       params=>{
         this.id = params['id'];
-        66
-
         this._productoService.obtener_producto_admin(this.id,this.token).subscribe(
           response=>{
             if(response.data == undefined){
               this.producto = undefined;
             }else{
-              this.producto = response.data;
-              
+              this.producto = response.data;         
               this._productoService.listar_inventario_producto_admin(this.producto._id, this.token).subscribe(
                 response=>{
                   
@@ -58,13 +55,10 @@ export class InventarioProductoComponent implements OnInit {
                   
                 }
                 
-              )
-              
-            }
-            
+              )   
+            }     
           },
-          error=>{
-            
+          error=>{           
           }
         );
       

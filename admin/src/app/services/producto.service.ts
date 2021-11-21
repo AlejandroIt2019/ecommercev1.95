@@ -94,4 +94,12 @@ export class ProductoService {
     return this._http.post(this.url + 'registro_inventario_producto_admin',data,{headers: headers});
   }
 
+  //implementación31
+  actualizar_producto_variedades_admin(data:any,id:any,token:any):Observable<any>{
+    
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
+    return this._http.put(this.url + 'actualizar_producto_variedades_admin/'+id,data,{headers: headers});
+   
+  }
+
 }
