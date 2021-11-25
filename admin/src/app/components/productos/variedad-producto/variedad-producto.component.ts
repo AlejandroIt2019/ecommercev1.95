@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { GLOBAL } from 'src/app/services/GLOBAL';
 import { ProductoService } from 'src/app/services/producto.service';
 declare var iziToast:any;
 declare var jQuery: any;
@@ -17,12 +18,15 @@ export class VariedadProductoComponent implements OnInit {
   public token:any;
 
   public nueva_variedad = '';
+  public load_btn = false;
+  public url:any;
 
   constructor(
     private _route: ActivatedRoute,
     private _productoService : ProductoService
   ) {
     this.token = localStorage.getItem('token');
+    this.url = GLOBAL.url;
     this._route.params.subscribe(
       params=>{
         this.id = params['id'];
@@ -76,12 +80,21 @@ export class VariedadProductoComponent implements OnInit {
     if(this.producto.titulo_variedad){
       if(this.producto.variedades.length >=1){
         //actualizar
+        this.load_btn = true;
         this._productoService.actualizar_producto_variedades_admin({
           titulo_variedad: this.producto.titulo_variedad,
           variedades : this.producto.variedades
         }, this.id, this.token).subscribe(
           response=>{
             console.log(response);
+            iziToast.show({
+              title: 'SUCESS',
+              titleColor: '#33FFB2',
+              class: 'text-sucess',
+              position: 'topRight',
+              message: 'Se agrego correctamente la nueva variedad'
+            });
+            this.load_btn = false;
             
           }
         );

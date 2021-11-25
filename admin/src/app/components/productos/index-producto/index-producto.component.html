@@ -22,9 +22,16 @@
                     <input class="form-control" type="text" placeholder="Titulo del producto" name="filtro" [(ngModel)]="filtro">
                     <button class="btn btn-primary" type="button" (click)="filtrar()">Filtrar</button>
                     <button class="btn btn-info" type="button" (click)="resetear()">Resetear</button>
+                    
                   </div>
                 </div>
+                <!-- ultimo div creado33 -->
+                <div class="col-12 mt-3">
+                  <button class="btn btn-success" (click)="download_excel()">Exportar a Excel</button>
+                </div>
+                <!-- ultimo div creado33 -->
             </div>
+
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -76,11 +83,13 @@
                               <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#delete-'+item._id">Eliminar producto</a>
                               <a class="dropdown-item" [routerLink]="['/panel/productos/inventario',item._id]" routerLinkActive="router-link-active" >Inventario</a>
                               <a class="dropdown-item" [routerLink]="['/panel/productos/variedades',item._id]" routerLinkActive="router-link-active" >Variedades</a>
+                              <a class="dropdown-item" [routerLink]="['/panel/productos/galeria',item._id]" routerLinkActive="router-link-active" >Galeria</a>
+
                             </div>
                          </div>
 
                          <!-- modal afuera del dropdown-->
-                         <div class="modal fade" id="delete-{{item._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                        <div class="modal fade" id="delete-{{item._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
