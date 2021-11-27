@@ -14,15 +14,52 @@
             <span class="input-group-text"><i class="cxi-search lead align-middle"></i></span>
           </div>
         </div>
+
         <!-- Toolbar -->
         <div class="d-flex align-items-center order-lg-3">
           <ul class="nav nav-tools flex-nowrap">
             <li class="nav-item d-lg-block d-none mb-0">
-              <a href="account-wishlist.html" class="nav-tool">
-                <i class="cxi-heart nav-tool-icon"></i>
-                <span class="nav-tool-label">2</span>
-              </a>
+              <!-- configurando el icono y redirigiendo al login -->
+              
+                <ng-container *ngIf="user_lc == undefined">
+                  <a [routerLink]="['/login']" class="nav-tool">
+                      <i class="cxi-profile nav-tool-icon"></i>
+                      <span class="nav-tool-label">Iniciar Sección</span>
+                  </a>
+                </ng-container>
+
+
+
+              <ng-container *ngIf="user_lc">
+                  <li class="nav-item d-lg-block d-none dropdown">
+                  <a class="nav-tool dropdown-toggle" toggle="dropdown" style="cursor: pointer;">
+                    <i class="cxi-profile nav-tool-icon"></i>
+                    <span class="nav-tool-label">{{user_lc.nombres}}</span>
+                  </a>
+                  <!-- Dropdown para el perfil, style="margin-top: 2rem" -->
+                        <div class="dropdown-menu" >
+                          
+                          <a [routerLink]="['/cuenta/perfil']" routerLinkActive="active"  class="dropdown-item">
+                            <i class="cxi-profile me-2"></i>
+                            Perfil
+                           <!-- <span class="badge rounded-pill bg-danger ms-2">3</span> -->
+                          </a>
+                          <a href="#" class="dropdown-item">
+                            <i class="cxi-comment me-2"></i>
+                            Mensajes
+                            <span class="badge rounded-pill bg-success ms-2">5</span>
+                          </a>
+                          <a href="#" class="dropdown-item">
+                            <i class="cxi-external-link me-2"></i>
+                            Cerrar sesión
+                            <span class="badge rounded-pill bg-warning ms-2">1</span>
+                          </a>
+                        </div>
+                    <!-- Dropdown para el perfil --> 
+                  </li>     
+              </ng-container>
             </li>
+            
             <li class="divider-vertical mb-0 d-lg-block d-none"></li>
             <li class="nav-item align-self-center mb-0">
               <a href="#" class="nav-tool pr-lg-0" data-toggle="offcanvas" data-target="cart">
@@ -49,10 +86,10 @@
               </span>
             </div>
           </div>
-          <!-- Menu -->
+          <!-- Menu, para redirigir al componente de inicio-->
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a href="index.html" class="nav-link active">Home</a>
+              <a [routerLink]="['/']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact: true}" class="nav-link ">Inicio</a>
             </li>
             <li class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Shop</a>
