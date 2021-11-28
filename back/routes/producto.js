@@ -15,11 +15,17 @@ api.get('/obtener_producto_admin/:id',auth.auth,productoController.obtener_produ
 api.put('/actualizar_producto_admin/:id',[auth.auth,path],productoController.actualizar_producto_admin);
 api.delete('/eliminar_producto_admin/:id',auth.auth,productoController.eliminar_producto_admin);
 
-api.put('/actualizar_producto_variedades_admin:id',auth.auth,productoController.actualizar_producto_variedades_admin);
+api.put('/actualizar_producto_variedades_admin/:id',auth.auth,productoController.actualizar_producto_variedades_admin);
+api.put('/agregar_imagen_galeria_admin/:id',[auth.auth,path],productoController.agregar_imagen_galeria_admin);
+api.put('/eliminar_imagen_galeria_admin/:id',auth.auth,productoController.eliminar_imagen_galeria_admin);
 // inventario
 api.get('/listar_inventario_producto_admin/:_id',auth.auth,productoController.listar_inventario_producto_admin);
 api.delete('/eliminar_inventario_producto_admin/:id',auth.auth,productoController.eliminar_inventario_producto_admin);
 api.post('/registro_inventario_producto_admin',auth.auth,productoController.registro_inventario_producto_admin);
+
+//metodos publicos
+api.get('/listar_productos_publico/:filtro?',productoController.listar_productos_publico);
+
 
 
 module.exports = api;

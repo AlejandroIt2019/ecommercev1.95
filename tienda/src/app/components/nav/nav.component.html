@@ -15,7 +15,7 @@
           </div>
         </div>
 
-        <!-- Toolbar -->
+        <!-- Toolbar 2-->
         <div class="d-flex align-items-center order-lg-3">
           <ul class="nav nav-tools flex-nowrap">
             <li class="nav-item d-lg-block d-none mb-0">
@@ -24,20 +24,20 @@
                 <ng-container *ngIf="user_lc == undefined">
                   <a [routerLink]="['/login']" class="nav-tool">
                       <i class="cxi-profile nav-tool-icon"></i>
-                      <span class="nav-tool-label">Iniciar Sección</span>
+                      <span class="nav-tool-label">Iniciar Sesión</span>
                   </a>
                 </ng-container>
-
+                
 
 
               <ng-container *ngIf="user_lc">
                   <li class="nav-item d-lg-block d-none dropdown">
                   <a class="nav-tool dropdown-toggle" toggle="dropdown" style="cursor: pointer;">
                     <i class="cxi-profile nav-tool-icon"></i>
-                    <span class="nav-tool-label">{{user_lc.nombres}}</span>
+                    <span class="nav-tool-label">{{user_lc.nombres}} {{user_lc.apellidos}}</span>
                   </a>
                   <!-- Dropdown para el perfil, style="margin-top: 2rem" -->
-                        <div class="dropdown-menu" >
+                  <div class="dropdown-menu" >
                           
                           <a [routerLink]="['/cuenta/perfil']" routerLinkActive="active"  class="dropdown-item">
                             <i class="cxi-profile me-2"></i>
@@ -49,12 +49,12 @@
                             Mensajes
                             <span class="badge rounded-pill bg-success ms-2">5</span>
                           </a>
-                          <a href="#" class="dropdown-item">
-                            <i class="cxi-external-link me-2"></i>
+                          <a (click)="logout()" class="dropdown-item" style="cursor: pointer;">
+                            <i class="cxi-logout me-2"></i>
                             Cerrar sesión
-                            <span class="badge rounded-pill bg-warning ms-2">1</span>
+                            
                           </a>
-                        </div>
+                    </div>
                     <!-- Dropdown para el perfil --> 
                   </li>     
               </ng-container>
@@ -92,11 +92,13 @@
               <a [routerLink]="['/']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact: true}" class="nav-link ">Inicio</a>
             </li>
             <li class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Shop</a>
+              <a [routerLink]="['/productos']" routerLinkActive="active"  class="nav-link dropdown-toggle" data-toggle="dropdown">Tienda</a>
               <ul class="dropdown-menu">
-                <li><a href="shop-catalog.html" class="dropdown-item">Catalog with Filters</a></li>
-                <li><a href="shop-single.html" class="dropdown-item">Single Product</a></li>
-                <li><a href="checkout.html" class="dropdown-item">Checkout</a></li>
+                
+
+
+                <li *ngFor="let item of config_global.categorias">
+                  <a [routerLink]="['/productos/categoria/',item.titulo.toLowerCase()]" routerLinkActive="router-link-active"  class="dropdown-item"><i class="{{item.icono}}"></i> &nbsp; {{item.titulo}}</a></li>
               </ul>
             </li>
             <li class="nav-item dropdown mega-dropdown">

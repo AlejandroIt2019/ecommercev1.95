@@ -42,17 +42,23 @@ export class AdminService {
     try {
       const helper = new JwtHelperService();
       var decodedToken = helper.decodeToken(token);
+      
       console.log(decodedToken);
+
+      if(helper.isTokenExpired(token)){
+        localStorage.clear();
+        return false;
+      }
 
       if(!decodedToken){
         console.log('noacceso');
         localStorage.removeItem('token');
         return false;  
       }
-    } catch (error) {
-      localStorage.removeItem('token');
-      return false;
-    }
+      } catch (error) {
+        localStorage.removeItem('token');
+        return false;
+      }
 
     return allowRoles.includes(decodedToken['role']);
 
