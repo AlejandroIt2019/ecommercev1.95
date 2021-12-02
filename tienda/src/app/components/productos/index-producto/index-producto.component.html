@@ -134,7 +134,7 @@
                             <input type="radio" name="group1" (change)="buscar_por_categoria()" class="custom-control-input" id="blazers-todos" value="todos" [(ngModel)]="filter_cat_producto">
                             <label for="blazers-todos" class="custom-control-label">
                               <span class="cs-filter-item-text">Todos</span>
-                              <span class="pl-1 text-muted">(235)</span>
+                              <span class="pl-1 text-muted">(20)</span>
                             </label>
                           </div>
                         </li>
@@ -145,7 +145,7 @@
                             <input type="radio" name="group1" (change)="buscar_por_categoria()" class="custom-control-input" id="blazers-{{indice}}" value="{{item.titulo}}" [(ngModel)]="filter_cat_producto">
                             <label for="blazers-{{indice}}" class="custom-control-label">
                               <span class="cs-filter-item-text">{{item.titulo}}</span>
-                              <span class="pl-1 text-muted">(235)</span>
+                              <span class="pl-1 text-muted">(5)</span>
                             </label>
                           </div>
                         </li>
@@ -228,7 +228,7 @@
                 <div class="col pb-sm-2 mb-grid-gutter" *ngFor="let item of productos| slice: (page-1)*pageSize : (page-1) * pageSize + pageSize">
                   <div class="card card-product mx-auto">
                     <div class="card-product-img">
-                      <a href="shop-single.html" class="card-img-top">
+                      <a [routerLink]="['/productos/',item.slug]" routerLinkActive="router-link-active"  class="card-img-top">
                         <img [src]="url+'obtener_portada/'+item.portada" alt="Product image">
                       </a>
                       <div class="card-product-widgets-top">
@@ -246,7 +246,7 @@
                     </div>
                     <div class="card-body pb-2">
                       <h3 class="card-product-title text-truncate mb-2">
-                        <a href="shop-single.html" class="nav-link">{{item.titulo}}</a>
+                        <a [routerLink]="['/productos/',item.slug]" class="nav-link">{{item.titulo}}</a>
                       </h3>
                       <div class="d-flex align-items-center">
                         <span class="h5 d-inline-block mb-0">$ {{item.precio}} CLP</span>
@@ -262,10 +262,16 @@
                         </div>
                         
                       </div>
-                      <button type="button" class="btn btn-primary btn-block">
+                      <button *ngIf="!btn_cart" type="button" class="btn btn-primary btn-block" (click)="agregar_producto(item)">
                         <i class="cxi-cart align-middle mt-n1 mr-2"></i>
-                        Add to cart
+                        Agregar al carrito
                       </button>
+                      <!-- precargador -->
+                      <button *ngIf="btn_cart" type="button" class="btn btn-primary btn-block" disabled>
+                        <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+                        Agregando...
+                      </button>
+
                     </div>
                   </div>
                 </div>
@@ -308,3 +314,4 @@
       </section>
 </main>
 
+<app-footer></app-footer>

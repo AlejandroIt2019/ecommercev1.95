@@ -17,7 +17,7 @@
             <div class="col-lg-6">
                 <div class="px-md-5">
                     <h3 class="modal-title mt-4 mb-0 text-center">Iniciar Sesión</h3>
-                    <p class="font-size-sm text-muted text-center">Sign in to your account using email and password provided during registration.</p>
+                    <p class="font-size-sm text-muted text-center">Para iniciar sesión debe ingresar su correo y contraseña.</p>
                     <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
                       <div class="form-group">
                         <label for="signin-email">Correo electrónico</label>
@@ -50,28 +50,28 @@
             <div class="col-lg-6">
                 <div class="px-md-5">
                     <h3 class="modal-title mt-4 mb-0 text-center">Registro rápido</h3>
-                    <p class="font-size-sm text-muted text-center">Sign in to your account using email and password provided during registration.</p>
+                    <p class="font-size-sm text-muted text-center">Para registrarse debe rellenar este formulario.</p>
                     <form >
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <label for="signin-email">Nombres completos</label>
-                                    <input type="email" class="form-control"  placeholder="Names" required="">
+                                    <input type="email" class="form-control"  placeholder="Nombres" required="">
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="signin-email">Apellidos completos</label>
-                                    <input type="email" class="form-control"  placeholder="Fullname" required="">
+                                    <input type="email" class="form-control"  placeholder="Apellidos completos" required="">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="signin-email">Email</label>
-                            <input type="email" class="form-control" placeholder="Your email address" required="">
+                            <input type="email" class="form-control" placeholder="Tu correo" required="">
                         </div>
                         <div class="form-group">
                             <label for="signin-password" class="form-label">Password</label>
                             <div class="cs-password-toggle input-group-overlay">
-                            <input type="password" class="form-control appended-form-control" id="signin-password" placeholder="Your password" required="">
+                            <input type="password" class="form-control appended-form-control" id="signin-password" placeholder="Tu contraseña" required="">
                             <div class="input-group-append-overlay">
                                 <label class="btn cs-password-toggle-btn input-group-text">
                                 <input type="checkbox" class="custom-control-input">
@@ -84,11 +84,11 @@
                         <div class="d-flex justify-content-between align-items-center form-group">
                             <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="remember-me" checked="">
-                            <label for="remember-me" class="custom-control-label">Remember me</label>
+                            <label for="remember-me" class="custom-control-label">Recordar</label>
                             </div>
-                            <a href="#" class="font-size-sm text-decoration-none">Forgot password?</a>
+                            
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                        <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
                         <p class="font-size-sm pt-4 mb-0">
                             Ya tienes una cuenta?
                             <a href="#" class="font-weight-bold text-decoration-none">Registrarme</a>
