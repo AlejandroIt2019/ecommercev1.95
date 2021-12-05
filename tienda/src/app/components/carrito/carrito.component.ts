@@ -34,7 +34,9 @@ export class CarritoComponent implements OnInit {
         
 
       }
+      
     );
+    
    }
 
   ngOnInit(): void {
@@ -47,6 +49,7 @@ export class CarritoComponent implements OnInit {
       this.subtotal = this.subtotal + parseInt(element.producto.precio);
     });
     this.total_pagar = this.subtotal;
+
   }
 
 
@@ -60,18 +63,25 @@ export class CarritoComponent implements OnInit {
           position: 'topRight',
           message: 'Se elimino el producto del carrito.'
         });
+        
+        
         this.socket.emit('delete-carrito',{data:response.data});
         this._clienteService.obtener_carrito_cliente(this.idcliente, this.token).subscribe(
           response =>{
             this.carrito_arr = response.data;
             this.calcular_carrito();
             
+            
     
           }
+          
         );
+        
+        
         
       }
     );
+    
   }
 
 }

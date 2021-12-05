@@ -1,9 +1,12 @@
 'user strict'
 
-
 var Cliente = require('../models/cliente');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../helpers/jwt');
+
+var Direccion = require('../models/direccion');
+
+
 
 const registro_cliente = async function(req,res){
 
@@ -254,8 +257,70 @@ const actualizar_perfil_cliente_guest = async function(req,res){
             
     }else{
         res.status(500).send({message: 'NoAccess'});
+    }  
+}
+/*******************************************************************************/
+/*****************************DIRECCIONES*******************************/
+
+const registro_direccion_cliente = async function(req,res){
+    if(req.user){
+        
+        var data = req.body
+        //para no dejar más de un true en la dirección principal
+        if(data.principal){
+            let direcciones = await Direccion.find({cliente:data.cliente});
+
+            direcciones.forEach(async element =>{
+                await Direccion.findByIdAndUpdate({_id:element._id},{principal:false});
+            });
+        }
+
+        let reg = await Direccion.create(data);
+        res.status(200).send({data:reg});
+
+    }else{
+        res.status(500).send({message: 'NoAccess'});
     }
 }
+
+//para listar las direcciones de cliente
+
+const obtener_direccion_todos_cliente = async function(req,res){
+    if(req.user){
+        
+        var id = req.params['id'];
+        let direcciones = await Direccion.find({cliente:id}).populate('cliente').sort({createdAt:-1});
+        
+        res.status(200).send({data:direcciones});
+
+    }else{
+        res.status(500).send({message: 'NoAccess'});
+    }
+}
+
+
+const cambiar_direccion_principal_cliente = async function(req,res){
+    if(req.user){
+        var id = req.params['id'];
+        var cliente = req.params['cliente'];
+
+        let direcciones = await Direccion.find({cliente:cliente});
+
+        direcciones.forEach(async element =>{
+            await Direccion.findByIdAndUpdate({_id:element._id},{principal:false});
+        });
+        
+        await Direccion.findByIdAndUpdate({_id:id},{principal:true});
+
+       
+        res.status(200).send({data:true});
+
+    }else{
+        res.status(500).send({message: 'NoAccess'});
+    }
+}
+
+
 
 module.exports ={
     registro_cliente,
@@ -266,5 +331,8 @@ module.exports ={
     actualizar_cliente_admin,
     eliminar_cliente_admin,
     obtener_cliente_guest,
-    actualizar_perfil_cliente_guest
+    actualizar_perfil_cliente_guest,
+    registro_direccion_cliente,
+    obtener_direccion_todos_cliente,
+    cambiar_direccion_principal_cliente
 }

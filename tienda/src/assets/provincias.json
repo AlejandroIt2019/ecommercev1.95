@@ -1,0 +1,58 @@
+
+[
+  {
+    "id": "0101",
+    "name": "Arica",
+    "department_id": "01"
+  },
+  {
+    "id": "0102",
+    "name": "Putre",
+    "department_id": "01"
+  },
+  {
+    "id": "0201",
+    "name": "Iquique",
+    "department_id": "02"
+  },
+  {
+    "id": "0202",
+    "name": "Pozo Almonte",
+    "department_id": "02"
+  },
+  {
+    "id": "0301",
+    "name": "Calama",
+    "department_id": "03"
+  },
+  {
+    "id": "0401",
+    "name": "Colina",
+    "department_id": "04"
+  },
+  {
+    "id": "0402",
+    "name": "Santiago",
+    "department_id": "04"
+  },
+  {
+    "id": "0403",
+    "name": "Puente alto",
+    "department_id": "04"
+  },
+  {
+    "id": "0404",
+    "name": "San bernardo",
+    "department_id": "04"
+  },
+  {
+    "id": "0405",
+    "name": "Melipilla",
+    "department_id": "04"
+  },
+  {
+    "id": "0406",
+    "name": "Talagante",
+    "department_id": "04"
+  }
+]

@@ -19,6 +19,7 @@ import { SiderbarComponent } from './components/usuario/siderbar/siderbar.compon
 import { IndexProductoComponent } from './components/productos/index-producto/index-producto.component';
 import { ShowProductoComponent } from './components/productos/show-producto/show-producto.component';
 import { CarritoComponent } from './components/carrito/carrito.component';
+import { DireccionesComponent } from './components/usuario/direcciones/direcciones.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { CarritoComponent } from './components/carrito/carrito.component';
     SiderbarComponent,
     IndexProductoComponent,
     ShowProductoComponent,
-    CarritoComponent
+    CarritoComponent,
+    DireccionesComponent
   ],
   imports: [
     BrowserModule,
