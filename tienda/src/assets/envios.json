@@ -1,0 +1,17 @@
+[
+  {
+      "titulo": "Envio Express",
+      "tiempo": "1 hora",
+      "precio": 3500
+  },
+  {
+    "titulo": "Envio normal",
+    "tiempo": "2 horas",
+    "precio": 2500
+  },
+  {
+    "titulo": "Retiro en el local",
+    "tiempo": "no aplica",
+    "precio": 0
+  }
+]

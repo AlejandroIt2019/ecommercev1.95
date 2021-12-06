@@ -37,6 +37,8 @@ var config_route = require('./routes/config');
 
 //carrito
 var carrito_route = require('./routes/carrito');
+//venta
+var venta_route = require('./routes/venta');
 
 mongoose.connect('mongodb://127.0.0.1:27017/tienda',(err, res)=>{
 
@@ -71,6 +73,7 @@ app.use('/api',producto_route);
 app.use('/api',cupon_route);
 app.use('/api',config_route);
 app.use('/api',carrito_route);
+app.use('/api',venta_route);
 
 module.exports = app;
 

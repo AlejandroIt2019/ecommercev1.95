@@ -109,8 +109,10 @@ export class NavComponent implements OnInit {
 
   //metodo para calcular el total del carro
   calcular_carrito(){
+    this.subtotal = 0
     this.carrito_arr.forEach(element =>{
       this.subtotal = this.subtotal + parseInt(element.producto.precio);
+      
     });
   }
 
