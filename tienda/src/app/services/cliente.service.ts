@@ -133,4 +133,16 @@ export class ClienteService {
       return this._http.post(this.url + 'registro_compra_cliente',data,{headers: headers});
     }
 
+    enviar_correo_compra_cliente(id,token):Observable<any>{
+
+      let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
+      return this._http.get(this.url + 'enviar_correo_compra_cliente/'+id,{headers: headers});
+    }
+
+    validar_cupon_admin(cupon,token):Observable<any>{
+
+      let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
+      return this._http.get(this.url + 'validar_cupon_admin/'+cupon,{headers: headers});
+    }
+
 }

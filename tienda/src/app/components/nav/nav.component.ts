@@ -4,6 +4,7 @@ import { ClienteService } from 'src/app/services/cliente.service';
 import { GLOBAL } from 'src/app/services/GLOBAL';
 declare var $;
 import { io } from "socket.io-client";
+import { GuestService } from 'src/app/services/guest.service';
 declare var iziToast;
 @Component({
   selector: 'app-nav',
@@ -24,10 +25,13 @@ export class NavComponent implements OnInit {
   public subtotal = 0;
   public socket = io('http://localhost:4201');
 
+  public descuento_activo : any  = undefined;
+
   constructor(
     //inyectar servicios
     private _clienteService: ClienteService,
-    private _router: Router
+    private _router: Router,
+    private _guestService: GuestService
   ) { 
     this.url = GLOBAL.url;
     this.token = localStorage.getItem('token');
@@ -89,6 +93,19 @@ export class NavComponent implements OnInit {
     this.socket.on('new-carrito', this.obtener_carrito_cliente.bind(this));
     this.socket.on('new-carrito-add', this.obtener_carrito_cliente.bind(this));
     
+    this._guestService.obtener_descuento_activo().subscribe(
+      response =>{
+        
+        if(response.data != undefined){
+          this.descuento_activo = response.data[0];
+          
+        }else{
+          this.descuento_activo = undefined;
+        }
+
+               
+      }
+    );
   }
 
   logout(){
@@ -110,10 +127,18 @@ export class NavComponent implements OnInit {
   //metodo para calcular el total del carro
   calcular_carrito(){
     this.subtotal = 0
-    this.carrito_arr.forEach(element =>{
-      this.subtotal = this.subtotal + parseInt(element.producto.precio);
-      
-    });
+    if(this.descuento_activo == undefined){
+      this.carrito_arr.forEach(element =>{
+        this.subtotal = this.subtotal + parseInt(element.producto.precio);
+        
+      });
+    }else if(this.descuento_activo != undefined){
+      this.carrito_arr.forEach(element =>{
+        let new_precio = Math.round(parseInt(element.producto.precio) - (parseInt(element.producto.precio)*this.descuento_activo.descuento)/100);
+        this.subtotal = this.subtotal + new_precio;
+        
+      });
+    }
   }
 
   eliminar_item(id){
@@ -132,5 +157,6 @@ export class NavComponent implements OnInit {
       }
     );
   }
+
 
 }

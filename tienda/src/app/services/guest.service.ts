@@ -43,6 +43,24 @@ export class GuestService {
   get_envios():Observable<any>{
     return this._http.get('./assets/envios.json');
   }
+  //DESCUENTOS
+  obtener_descuento_activo():Observable<any>{
+
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.get(this.url + 'obtener_descuento_activo',{headers: headers});
+  }
+
+  listar_productos_nuevos_publico():Observable<any>{
+
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.get(this.url + 'listar_productos_nuevos_publico',{headers: headers});
+  }
+
+  listar_productos_masvendidos_publico():Observable<any>{
+
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.get(this.url + 'listar_productos_masvendidos_publico',{headers: headers});
+  }
 
 
 }

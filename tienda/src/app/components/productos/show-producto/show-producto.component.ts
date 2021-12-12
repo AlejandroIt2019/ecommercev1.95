@@ -28,6 +28,7 @@ export class ShowProductoComponent implements OnInit {
   public btn_cart = false;
 
   public socket = io('http://localhost:4201');
+  public descuento_activo : any  = undefined;
 
   constructor(
     private _route: ActivatedRoute,
@@ -119,6 +120,18 @@ export class ShowProductoComponent implements OnInit {
 
 
     },500);
+
+    this._guestService.obtener_descuento_activo().subscribe(
+      response =>{
+        
+        if(response.data != undefined){
+          this.descuento_activo = response.data[0];
+          
+        }else{
+          this.descuento_activo = undefined;
+        }        
+      }
+    );
 
   }
 

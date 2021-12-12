@@ -225,7 +225,8 @@
                 <input type="number" class="form-control form-control-sm bg-light mr-3" readonly style="width: 4.5rem;" value="{{item.cantidad}}">
                 <div class="text-nowrap">
             <!--      <strong class="text-danger">${{item.producto.precio}} CLP</strong> -->
-                   <span style="font-size: 1.2rem !important;" class="font-size-xs text-muted">${{item.producto.precio}} CLP</span>
+                  <span style="font-size: 1.2rem !important;" class="font-size-xs text-muted" *ngIf="descuento_activo == undefined">${{item.producto.precio}} CLP</span>
+                   <span style="font-size: 1.2rem !important;" class="font-size-xs text-muted" *ngIf="descuento_activo != undefined">${{item.producto.precio | descuento:descuento_activo.descuento}} CLP</span>
                   </div>
               </div>
               <button class="btn btn-link btn-sm text-decoration-none px-0 pb-0">

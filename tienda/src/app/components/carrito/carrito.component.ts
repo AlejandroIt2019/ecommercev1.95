@@ -3,6 +3,7 @@ import { ClienteService } from 'src/app/services/cliente.service';
 import { GLOBAL } from 'src/app/services/GLOBAL';
 import { io } from "socket.io-client";
 import { GuestService } from 'src/app/services/guest.service';
+import { Router } from '@angular/router';
 declare var iziToast;
 declare var Cleave;
 declare var StickySidebar;
@@ -39,10 +40,15 @@ export class CarritoComponent implements OnInit {
 
   public venta: any = {};
   public dventa: Array<any> = [];
+  public error_cupon = '';
+  public descuento = 0;
+
+  public descuento_activo : any  = undefined;
 
   constructor(
     private _clienteService : ClienteService,
-    private _guestService : GuestService
+    private _guestService : GuestService,
+    private _router : Router
   ) {
     this.idcliente = localStorage.getItem('_id');
     this.venta.cliente = this.idcliente;
@@ -61,6 +67,20 @@ export class CarritoComponent implements OnInit {
    }
 
   ngOnInit(): void {
+
+    this._guestService.obtener_descuento_activo().subscribe(
+      response =>{
+        if(response.data != undefined){
+          this.descuento_activo = response.data[0];
+          
+        }else{
+          this.descuento_activo = undefined;
+        }
+
+               
+      }
+    );
+
     this.init_Data();
     setTimeout(() => {
             new Cleave('#cc-number', {
@@ -88,7 +108,7 @@ export class CarritoComponent implements OnInit {
               description : 'Pago en Grow shop SKT2',
               amount : {
                 currency_code : 'USD',
-                value: this.subtotal
+                value: this.subtotal - this.descuento
               },
             }]
           });
@@ -105,7 +125,12 @@ export class CarritoComponent implements OnInit {
         this.venta.detalles = this.dventa;
         this._clienteService.registro_compra_cliente(this.venta,this.token).subscribe(
           response=>{
-            console.log(response);
+            
+            this._clienteService.enviar_correo_compra_cliente(response.venta._id,this.token).subscribe(
+              response =>{
+                this._router.navigate(['/']);
+              }
+            );
             
           }
         );
@@ -159,11 +184,19 @@ export class CarritoComponent implements OnInit {
 
   //metodo para calcular el total del carro
   calcular_carrito(){
-    this.subtotal = 0;
-    this.carrito_arr.forEach(element =>{
-      this.subtotal = this.subtotal + parseInt(element.producto.precio);
-    });
-    this.total_pagar = this.subtotal;
+    this.subtotal = 0
+    if(this.descuento_activo == undefined){
+      this.carrito_arr.forEach(element =>{
+        this.subtotal = this.subtotal + parseInt(element.producto.precio);
+        
+      });
+    }else if(this.descuento_activo != undefined){
+      this.carrito_arr.forEach(element =>{
+        let new_precio = Math.round(parseInt(element.producto.precio) - (parseInt(element.producto.precio)*this.descuento_activo.descuento)/100);
+        this.subtotal = this.subtotal + new_precio;
+        
+      });
+    }
     
   }
 
@@ -198,5 +231,39 @@ export class CarritoComponent implements OnInit {
     console.log(this.venta);
     
   }
+
+  validar_cupon(){
+    if(this.venta.cupon){
+      if(this.venta.cupon.toString().length <= 25){
+        
+        this._clienteService.validar_cupon_admin(this.venta.cupon,this.token).subscribe(
+          response=>{
+            if(response.data != undefined){
+              this.error_cupon = '';
+              //VALIDACION TIPO O FIJO
+              if(response.data.tipo == 'Valor fijo' ){
+                this.descuento = response.data.valor;
+                this.total_pagar = this.total_pagar - this.descuento;
+              }else if(response.data.tipo == 'Porcentaje' ){
+                this.descuento = (this.total_pagar * response.data.valor)/100;
+                this.total_pagar = this.total_pagar - this.descuento;
+              }
+
+            }else{
+              this.error_cupon = 'El cupón no se pudo canjear'
+            }
+            console.log(response);
+            
+          }
+        );
+      }else{
+        this.error_cupon = 'El cupón debe ser menos de 25 caracteres'
+      }
+    }else{
+      this.error_cupon = 'El cupón no es valido'
+    }
+  }
+
+  
 
 }

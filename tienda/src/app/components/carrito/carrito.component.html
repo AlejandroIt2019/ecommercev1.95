@@ -56,13 +56,25 @@
                         <li class="mb-0"><span class="text-muted">{{item.producto.titulo_variedad}}</span> {{item.variedad}}</li>
                       </ul>
                     </div>
-                    <div class="d-flex pr-sm-3">
+
+                    <div class="d-flex pr-sm-3" *ngIf="descuento_activo != undefined">
                       <input type="number" class="form-control form-control-sm bg-light mr-3" readonly style="width: 4.5rem;" value="{{item.cantidad}}">
                       <div class="text-nowrap pt-2">
-                   <!--     <strong class="text-danger">$15.00</strong>  -->
+                       <strong class="text-danger mr-1">$ {{item.producto.precio | descuento:descuento_activo.descuento}}</strong>
+                   <span class="font-size-xs text-muted">${{item.producto.precio}} CLP</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex pr-sm-3" *ngIf="descuento_activo == undefined">
+                      <input type="number" class="form-control form-control-sm bg-light mr-3" readonly style="width: 4.5rem;" value="{{item.cantidad}}">
+                      <div class="text-nowrap pt-2">
+                       
                    <span style="font-size: 1.2rem !important;" class="font-size-xs text-muted">${{item.producto.precio}} CLP</span>
                         </div>
                     </div>
+
+
+
                     <div class="d-flex align-items-center flex-sm-column text-sm-center ml-sm-auto pt-3 pt-sm-0">
                       <button class="btn btn-outline-primary btn-sm mr-2 mr-sm-0" (click)="eliminar_item(item._id)">Eliminar</button>
                       <button class="btn btn-link btn-sm text-decoration-none pt-0 pt-sm-2 px-0 pb-0 mt-0 mt-sm-1">
@@ -195,7 +207,7 @@
                     <div class="card-header py-2">
                       <div class="accordion-heading custom-control custom-radio" data-toggle="collapse" data-target="#paypal-card">
                         <input type="radio" class="custom-control-input" id="paypal" name="payment">
-                        <label for="paypal" class="custom-control-label d-flex align-items-center">
+                        <label for="paypal" class="custom-control-label d-flex align-items-center" hola>
                           <strong class="d-block mr-3">PayPal</strong>
                           <img src="assets/img/paypal-badge.png" width="48" alt="PayPal">
                         </label>
@@ -249,9 +261,20 @@
                   <div class="input-group input-group-lg">
                     <input type="text" id="promo-code" class="form-control" placeholder="Aplicar cupón" name="cupon" [(ngModel)]="venta.cupon">
                     <div class="input-group-append">
-                      <button type="button" class="btn btn-primary">&nbsp;&nbsp;Aplicar&nbsp;&nbsp;</button>
+                      <button type="button" class="btn btn-primary" (click)="validar_cupon()">&nbsp;&nbsp;Aplicar&nbsp;&nbsp;</button >
+                        
                     </div>
                   </div>
+
+
+                  <!-- Danger alert -->
+                    <div class="alert alert-danger mt-3" role="alert" *ngIf="error_cupon">
+                      {{error_cupon}}
+                    </div>
+
+
+
+
                 </div>
                 <div class="bg-secondary rounded mb-4">
                   <div class="border-bottom p-4">
@@ -268,7 +291,7 @@
                     </li>
                     <li class="d-flex justify-content-between mb-2">
                       <span>Descuento:</span>
-                      <span>&mdash;</span>
+                      <span>- ${{descuento}}</span>
                     </li>
                     
                   </ul>
