@@ -109,11 +109,11 @@ export class InventarioProductoComponent implements OnInit {
       },
       error=>{
         iziToast.show({
-            title: 'SUCESS',
-            titleColor: '#33FFB2',
-            class: 'text-sucess',
+            title: 'ERROR',
+            titleColor: '#FF0000',
+            class: 'text-danger',
             position: 'topRight',
-            message: 'Ocurrió un error en el servidor'
+            message: 'Porfavor pongase en contacto con el equipo de desarrollo.'
           });
         console.log(error);
         this.load_btn = false;
@@ -130,7 +130,8 @@ export class InventarioProductoComponent implements OnInit {
         producto: this.producto._id,
         cantidad: inventarioForm.value.cantidad,
         admin: this._iduser,
-        proveedor: inventarioForm.value.proveedor
+        proveedor: inventarioForm.value.proveedor,
+        createdAt: inventarioForm.value.createdAt
 
       }
 

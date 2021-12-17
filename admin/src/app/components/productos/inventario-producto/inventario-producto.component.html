@@ -52,6 +52,7 @@
                       <th>Admin</th>
                       <th>Cantidad</th>
                       <th>Proveedor</th>
+                      <th>Fecha</th>
                       <th>OP</th>
                     </tr>
                   </thead>
@@ -73,6 +74,7 @@
                         <td>{{item.admin.nombres}} {{item.admin.apellidos}}</td>
                         <td>{{item.cantidad}} </td>
                         <td>{{item.proveedor}} </td>
+                        <td>{{item.createdAt}} </td>
                         <td>
                           <button class="btn btn-danger btn-sm "data-toggle="modal" [attr.data-target]="'#delete-'+item._id">
                             <i class="cxi-delete"></i>

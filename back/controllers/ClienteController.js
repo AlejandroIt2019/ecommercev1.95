@@ -1,6 +1,10 @@
 'user strict'
 
 var Cliente = require('../models/cliente');
+var Venta = require('../models/venta');
+var Dventa = require('../models/dventa');
+var Review = require('../models/review');
+var Contacto = require('../models/contacto');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../helpers/jwt');
 
@@ -213,6 +217,7 @@ const obtener_cliente_guest = async function(req,res){
         res.status(500).send({message: 'NoAccess'});
     }
 }
+
 //metodo api para actualizar el cliente, actualizando documento de la colección de cliente
 const actualizar_perfil_cliente_guest = async function(req,res){
     if(req.user){
@@ -259,6 +264,49 @@ const actualizar_perfil_cliente_guest = async function(req,res){
         res.status(500).send({message: 'NoAccess'});
     }  
 }
+
+/**ORDENES */
+const obtener_ordenes_cliente = async function(req,res){
+    if(req.user){
+        var id = req.params['id'];
+
+        let reg = await Venta.find({cliente: id}).sort({createAt: -1});
+        
+        if(reg.length >=1){
+            res.status(200).send({data:reg});
+        }else if(reg.length ==0){
+            res.status(200).send({data:undefined});
+        }
+
+        
+    }else{
+        res.status(500).send({message: 'NoAccess'});
+    }
+}
+
+const obtener_detalles_ordenes_cliente = async function(req,res){
+    if(req.user){
+        var id = req.params['id'];
+        
+        try {
+            let venta = await Venta.findById({_id:id}).populate('direccion').populate('cliente');
+            let detalles = await Dventa.find({venta:id}).populate('producto');
+
+            res.status(200).send({data:venta,detalles:detalles});
+
+        } catch (error) {
+            res.status(200).send({data:undefined});
+        }
+            
+    }else{
+        res.status(500).send({message: 'NoAccess'});
+    }
+}
+
+
+
+
+
 /*******************************************************************************/
 /*****************************DIRECCIONES*******************************/
 
@@ -339,6 +387,27 @@ const obtener_direccion_principal_cliente = async function(req,res){
     }
 }
 
+//CONTACTOOOOOOOOOOOOOOOOO
+const enviar_mensaje_contacto = async function(req,res){
+    let data = req.body;
+    data.estado = 'Abierto';
+    let reg = await Contacto.create(data);
+    res.status(200).send({data:reg});
+}
+
+//REVIEWS
+const emitir_review_producto_cliente = async function(req,res){
+    if(req.user){
+        
+        let data = req.body;
+        let reg = await Review.create(data);
+        res.status(200).send({data:reg});
+
+    }else{
+        res.status(500).send({message: 'NoAccess'});
+    }
+}
+
 
 
 module.exports ={
@@ -354,5 +423,9 @@ module.exports ={
     registro_direccion_cliente,
     obtener_direccion_todos_cliente,
     cambiar_direccion_principal_cliente,
-    obtener_direccion_principal_cliente
+    obtener_direccion_principal_cliente,
+    enviar_mensaje_contacto,
+    obtener_ordenes_cliente,
+    obtener_detalles_ordenes_cliente,
+    emitir_review_producto_cliente
 }

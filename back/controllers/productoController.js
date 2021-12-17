@@ -203,7 +203,7 @@ const listar_inventario_producto_admin = async function(req,res){
 
 const eliminar_inventario_producto_admin = async function(req,res){
     if(req.user){
-        if(req.user.role =='admin'){
+        if(req.user.role =='admindev'){
             //obtener id de inventario
             var id = req.params['id'];
             //eliminando inventario
