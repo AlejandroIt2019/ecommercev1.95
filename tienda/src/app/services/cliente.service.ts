@@ -28,6 +28,15 @@ export class ClienteService {
     //({'Content-Type':'application/json','Authorization':token});
   }
 
+  registro_cliente(data:any):Observable<any>{
+
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.post(this.url + 'registro_cliente',data,{headers: headers});
+    //({'Content-Type':'application/json','Authorization':token});
+  }
+  
+
+
   obtener_cliente_guest(id:any,token:any):Observable<any>{
 
     let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
@@ -162,6 +171,10 @@ export class ClienteService {
       let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
       return this._http.post(this.url + 'emitir_review_producto_cliente',data,{headers: headers});
     }
+
+    //REGISTRO
+    
+  
 
 
 }

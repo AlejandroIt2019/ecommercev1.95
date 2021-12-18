@@ -13,9 +13,15 @@ export class LoginComponent implements OnInit {
   public user: any = {};
   public usuario: any = {};
   public token:any;
+
+
+  public cliente: any = {};
+  
+
   constructor(
     private _clienteService: ClienteService,
-    private _router : Router
+    private _router : Router,
+    
   ) { 
     this.token = localStorage.getItem('token');
     if(this.token){
@@ -66,6 +72,47 @@ export class LoginComponent implements OnInit {
 
           }
          
+        },
+        error=>{
+          console.log(error);
+          
+        }
+      );
+      
+    }else{
+      iziToast.show({
+        title: 'ERROR',
+        titleColor: '#FF0000',
+        class: 'text-danger',
+        position: 'topRight',
+        message: 'Los datos del formulario no son validos'
+      });
+    }
+  }
+
+  registro(registroForm:any){
+    if(registroForm.valid){
+      
+
+      this._clienteService.registro_cliente(this.cliente).subscribe(
+        response=>{
+          console.log(response);
+            iziToast.show({
+              title: 'SUCESS',
+              titleColor: '#33FFB2',
+              class: 'text-sucess',
+              position: 'topRight',
+              message: 'Se registro correctamente el nuevo cliente'
+            });
+          this.cliente = {
+          
+            nombres: this.cliente.nombres,
+            apellidos: this.cliente.apellidos,
+            email: this.cliente.email,
+            password: this.cliente.password
+          }
+          
+          this._router.navigate(['/login']);
         },
         error=>{
           console.log(error);
