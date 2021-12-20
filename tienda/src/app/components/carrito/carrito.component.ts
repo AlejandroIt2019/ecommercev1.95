@@ -4,6 +4,7 @@ import { GLOBAL } from 'src/app/services/GLOBAL';
 import { io } from "socket.io-client";
 import { GuestService } from 'src/app/services/guest.service';
 import { Router } from '@angular/router';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 declare var iziToast;
 declare var Cleave;
 declare var StickySidebar;
@@ -128,12 +129,16 @@ export class CarritoComponent implements OnInit {
             
             this._clienteService.enviar_correo_compra_cliente(response.venta._id,this.token).subscribe(
               response =>{
+
                 this._router.navigate(['/']);
               }
             );
             
+            
           }
+          
         );
+        
       },
       onError : err =>{
        
@@ -142,6 +147,7 @@ export class CarritoComponent implements OnInit {
         
       }
     }).render(this.paypalElement.nativeElement);
+    
   }
 
   init_Data(){

@@ -68,11 +68,11 @@ export class IndexProductoComponent implements OnInit {
                 //console.log(response); por si algo falla
                 this.productos = response.data;
                 //set time out
-                setTimeout(() => {
-                  this.load_data = false;
-                }, 3000);
+                
+                
+                
                 this.productos = this.productos.filter(item =>item.categoria.toLowerCase() == this.route_categoria);
-                 //mover para probar
+                this.load_data = false;//mover para probar
               }
             );
           }else{

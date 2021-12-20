@@ -25,6 +25,7 @@ import { DescuentoPipe } from './pipes/descuento.pipe';
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { IndexOrdenesComponent } from './components/usuario/ordenes/index-ordenes/index-ordenes.component';
 import { DetalleOrdenComponent } from './components/usuario/ordenes/detalle-orden/detalle-orden.component';
+import { IndexReviewComponent } from './components/usuario/reviews/index-review/index-review.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { DetalleOrdenComponent } from './components/usuario/ordenes/detalle-orde
     DescuentoPipe,
     ContactoComponent,
     IndexOrdenesComponent,
-    DetalleOrdenComponent
+    DetalleOrdenComponent,
+    IndexReviewComponent
   ],
   imports: [
     BrowserModule,

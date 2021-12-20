@@ -47,11 +47,29 @@ export class DetalleOrdenComponent implements OnInit {
 
         if(response.data != undefined){
           this.orden = response.data;
+          response.detalles.forEach(element => {
+            this._clienteService.obtener_review_producto_cliente(element.producto._id).subscribe(
+              response => {
+
+                let emitido = false;
+                response.data.forEach(element_ => {
+                  if(element_.cliente == localStorage.getItem('_id')){
+                    emitido = true;
+                  }
+                });
+                element.estado = emitido;
+                
+              }
+            );
+          });
           this.detalles = response.detalles;
           this.load_data = false;
         }else{
           this.orden = undefined;
         }
+        this.totalstar= 5;
+        
+        
         
         
         
@@ -62,6 +80,7 @@ export class DetalleOrdenComponent implements OnInit {
 
   onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent}){
     console.log($event.newValue);
+    this.totalstar = $event.newValue;
     
   }
 

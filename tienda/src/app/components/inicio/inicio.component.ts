@@ -32,13 +32,13 @@ export class InicioComponent implements OnInit {
               portada: 'assets/img/ecommerce/home/categories/15.jpg'
             });
 
-          }else if(element.titulo == 'Sustrato'){
+          }else if(element.titulo == 'Sustratos'){
             this.categorias.push({
               titulo: element.titulo,
               portada: 'assets/img/ecommerce/home/categories/14.jpg'
             });
 
-          }else if(element.titulo == 'Fertilizante'){
+          }else if(element.titulo == 'Fertilizantes'){
             this.categorias.push({
               titulo: element.titulo,
               portada: 'assets/img/ecommerce/home/categories/13.jpg'

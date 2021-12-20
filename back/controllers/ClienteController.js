@@ -408,7 +408,24 @@ const emitir_review_producto_cliente = async function(req,res){
     }
 }
 
+const obtener_review_producto_cliente = async function(req,res){
+    
+    let id = req.params['id'];
+    let reg = await Review.find({producto:id}).sort({createdAt: -1});
+    res.status(200).send({data:reg});
+}
 
+const obtener_reviews_cliente = async function(req,res){
+    if(req.user){
+        
+        let id = req.params['id'];
+        let reg = await Review.find({cliente:id}).populate('cliente');
+        res.status(200).send({data:reg});
+
+    }else{
+        res.status(500).send({message: 'NoAccess'});
+    }
+}
 
 module.exports ={
     registro_cliente,
@@ -427,5 +444,7 @@ module.exports ={
     enviar_mensaje_contacto,
     obtener_ordenes_cliente,
     obtener_detalles_ordenes_cliente,
-    emitir_review_producto_cliente
+    emitir_review_producto_cliente,
+    obtener_review_producto_cliente,
+    obtener_reviews_cliente
 }

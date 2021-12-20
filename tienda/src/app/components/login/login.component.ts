@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
   registro(registroForm:any){
     if(registroForm.valid){
       
-
+      
       this._clienteService.registro_cliente(this.cliente).subscribe(
         response=>{
           console.log(response);
@@ -119,6 +119,7 @@ export class LoginComponent implements OnInit {
           
         }
       );
+      
       
     }else{
       iziToast.show({
