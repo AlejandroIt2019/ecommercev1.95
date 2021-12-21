@@ -23,6 +23,7 @@ import { EditDescuentoComponent } from "./components/descuento/edit-descuento/ed
 import { IndexContactoComponent } from "./components/contacto/index-contacto/index-contacto.component";
 import { IndexVentasComponent } from "./components/ventas/index-ventas/index-ventas.component";
 import { DetalleVentasComponent } from "./components/ventas/detalle-ventas/detalle-ventas.component";
+import { ReviewsProductoComponent } from "./components/productos/reviews-producto/reviews-producto.component";
 
 const appRoute : Routes = [
     {path: '', redirectTo: 'inicio', pathMatch: 'full'},
@@ -40,6 +41,7 @@ const appRoute : Routes = [
         {path: 'productos/inventario/:id', component: InventarioProductoComponent, canActivate: [AdminGuard]},
         {path: 'productos/variedades/:id', component: VariedadProductoComponent, canActivate: [AdminGuard]},
         {path: 'productos/galeria/:id', component: GaleriaProductoComponent, canActivate: [AdminGuard]},
+        {path: 'productos/reviews/:id', component: ReviewsProductoComponent, canActivate: [AdminGuard]},
 
         //DESCUENTO RUTAS
         {path: 'descuentos', component: IndexDescuentoComponent, canActivate: [AdminGuard]},

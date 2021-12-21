@@ -2,6 +2,7 @@
 
 var Producto = require('../models/producto');
 var Inventario = require('../models/inventario');
+var Review = require('../models/review');
 
 var fs = require('fs');
 var path = require('path');
@@ -145,11 +146,13 @@ const actualizar_producto_admin = async function(req,res){
 }
 
 const eliminar_producto_admin = async function(req,res){
+    console.log(req.body);
+    const habilitar = req.body.habilitado||false;
     if(req.user){
         if(req.user.role =='admin'){
 
             var id= req.params['id'];
-            let reg =await Producto.findByIdAndRemove({_id:id});
+            let reg =await Producto.findByIdAndUpdate(id,{$set:{habilitado:habilitar}});
             res.status(200).send({data:reg});
 
                            
@@ -330,8 +333,9 @@ const listar_productos_publico = async function(req,res){
 //metodos publicos
 
 const listar_productos_publico = async function(req,res){
+   
     var filtro = req.params['filtro'];
-    let reg = await Producto.find({titulo: new RegExp(filtro,'i')}).sort({createdAt: -1});
+    let reg = await Producto.find({titulo: new RegExp(filtro,'i'),habilitado:true}).sort({createdAt: -1});
      res.status(200).send({data: reg});
             
 }
@@ -367,6 +371,13 @@ const listar_productos_masvendidos_publico = async function(req,res){
             
 }
 
+const obtener_reviews_producto_publico = async function(req,res){
+    
+    let id = req.params['id'];
+    let reviews = await Review.find({producto:id}).populate('cliente').sort({createdAt: -1});
+    res.status(200).send({data: reviews});          
+}
+
 
 
 
@@ -388,7 +399,8 @@ module.exports = {
     obtener_productos_slug_publico,
     listar_productos_recomendados_publico,
     listar_productos_nuevos_publico,
-    listar_productos_masvendidos_publico
+    listar_productos_masvendidos_publico,
+    obtener_reviews_producto_publico
 }
 
 

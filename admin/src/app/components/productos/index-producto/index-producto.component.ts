@@ -98,9 +98,9 @@ export class IndexProductoComponent implements OnInit {
     this.init_data();
   }
 
-  eliminar(id:any){
+  eliminar(id:any,habilitado:boolean=false){
     this.load_btn = true;
-    this._productoService.eliminar_producto_admin(id,this.token).subscribe(
+    this._productoService.eliminar_producto_admin(id,habilitado,this.token).subscribe(
       response=>{
         iziToast.show({
           title: 'SUCESS',
@@ -118,9 +118,9 @@ export class IndexProductoComponent implements OnInit {
       },
       error=>{
         iziToast.show({
-            title: 'SUCESS',
+            title: 'ERROR',
             titleColor: '#33FFB2',
-            class: 'text-sucess',
+            class: 'text-error',
             position: 'topRight',
             message: 'Ocurrió un error en el servidor'
           });

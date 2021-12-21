@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 declare var iziToast:any;
@@ -90,13 +91,14 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  registro(registroForm:any){
+  registro(registroForm:NgForm){
     if(registroForm.valid){
       
       
       this._clienteService.registro_cliente(this.cliente).subscribe(
         response=>{
           console.log(response);
+          
             iziToast.show({
               title: 'SUCESS',
               titleColor: '#33FFB2',
@@ -111,13 +113,21 @@ export class LoginComponent implements OnInit {
             email: this.cliente.email,
             password: this.cliente.password
           }
-          
+          registroForm.reset();
           this._router.navigate(['/login']);
         },
         error=>{
           console.log(error);
-          
+          iziToast.show({
+            title: 'ERROR',
+            titleColor: '#FF0000',
+            class: 'text-danger',
+            position: 'topRight',
+            message: error.error.message
+            
+          });
         }
+
       );
       
       

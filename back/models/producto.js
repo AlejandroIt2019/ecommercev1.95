@@ -18,6 +18,7 @@ var ProductoSchema = Schema({
     categoria: {type: String, required: true},
     titulo_variedad: {type: String, required: false},
     estado:{type:String,default:'Edicion',required:true},
+    habilitado:{type:Boolean,default:true},
     createdAt:{ type:Date, default:Date.now, require:true}
    
  

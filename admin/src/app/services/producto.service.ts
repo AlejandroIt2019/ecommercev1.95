@@ -70,10 +70,14 @@ export class ProductoService {
   }
 
 
-  eliminar_producto_admin(id:any, token:any):Observable<any>{
+  eliminar_producto_admin(id:any,habilitado:boolean, token:any):Observable<any>{
 
     let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
-    return this._http.delete(this.url + 'eliminar_producto_admin/'+id,{headers: headers});
+    let body = 
+    {
+      habilitado
+    }
+    return this._http.delete(this.url + 'eliminar_producto_admin/'+id,{headers: headers,body:body});
   }
 
   listar_inventario_producto_admin(id:any, token:any):Observable<any>{
@@ -120,6 +124,12 @@ export class ProductoService {
     return this._http.put(this.url + 'eliminar_imagen_galeria_admin/'+id,data,{headers: headers});
    
   }
+
+  obtener_reviews_producto_publico(id:any):Observable<any>{
+
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.get(this.url + 'obtener_reviews_producto_publico/'+id,{headers: headers});
+ }
 
 
 }

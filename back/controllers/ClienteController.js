@@ -30,18 +30,18 @@ const registro_cliente = async function(req,res){
                     var reg = await Cliente.create(data);
                     res.status(200).send({data:reg});
                 }else{
-                    res.status(200).send({message: 'ErrorServer',data:undefined});
+                    res.status(400).send({message: 'ErrorServer',data:undefined});
 
                 }
 
                 })
             }else{
-                res.status(200).send({message: 'no hay una contraseña',data:undefined});
+                res.status(400).send({message: 'no hay una contraseña',data:undefined});
 
             }
 
         }else{
-            res.status(200).send({message: 'el correo ya existe en la base de datos',data:undefined});
+            res.status(400).send({message: 'el correo ya existe en la base de datos',data:undefined});
 }
 }
 
