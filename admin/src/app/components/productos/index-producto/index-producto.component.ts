@@ -130,6 +130,8 @@ export class IndexProductoComponent implements OnInit {
       }
     )
   }
+
+  
   //función para exportar los datos a Excel.
   download_excel(){
     let workbook = new Workbook();

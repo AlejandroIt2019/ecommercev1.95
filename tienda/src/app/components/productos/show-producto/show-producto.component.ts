@@ -30,6 +30,28 @@ export class ShowProductoComponent implements OnInit {
   public socket = io('http://localhost:4201');
   public descuento_activo : any  = undefined;
 
+  public reviews : Array<any> = [];
+  public page = 1;
+  public pageSize = 15;
+
+  //RESEÑAS
+  public count_five_start = 0;
+  public count_four_start = 0;
+  public count_three_start = 0;
+  public count_two_start = 0;
+  public count_one_start = 0;
+
+  public total_puntos = 0;
+  public max_puntos = 0;
+  public porcent_raiting = 0;
+  public puntos_raiting = 0;
+
+  public cinco_porcent = 0;
+  public cuatro_porcent = 0;
+  public tres_porcent = 0;
+  public dos_porcent = 0;
+  public uno_porcent = 0;
+
   constructor(
     private _route: ActivatedRoute,
     private _guestService : GuestService,
@@ -44,6 +66,59 @@ export class ShowProductoComponent implements OnInit {
         this._guestService.obtener_productos_slug_publico(this.slug).subscribe(
           response =>{
             this.producto = response.data;
+
+            this._guestService.obtener_reviews_producto_publico(this.producto._id).subscribe(
+              response=>{
+                response.data.forEach(element => {
+                  if(element.estrellas == 5){
+                    this.count_five_start = this.count_five_start +1;
+                  }
+                  else if(element.estrellas == 4){
+                    this.count_four_start = this.count_four_start +1;
+                  }
+                  else if(element.estrellas == 3){
+                    this.count_three_start = this.count_three_start +1;
+                  }
+                  else if(element.estrellas == 2){
+                    this.count_two_start = this.count_two_start +1;
+                  }
+                  else if(element.estrellas == 1){
+                    this.count_one_start = this.count_one_start +1;
+                  }
+
+                  this.cinco_porcent = (this.count_five_start*100)/response.data.length;
+                  this.cuatro_porcent = (this.count_four_start*100)/response.data.length;
+                  this.tres_porcent = (this.count_three_start*100)/response.data.length;
+                  this.dos_porcent = (this.count_two_start*100)/response.data.length;
+                  this.uno_porcent = (this.count_one_start*100)/response.data.length;
+
+                  
+                  let puntos_cinco = 0;
+                  let puntos_cuatro = 0;
+                  let puntos_tres = 0;
+                  let puntos_dos = 0;
+                  let punto_uno = 0;
+
+                  puntos_cinco = this.count_five_start * 5;
+                  puntos_cuatro = this.count_four_start * 4;
+                  puntos_tres = this.count_three_start * 3;
+                  puntos_dos = this.count_two_start * 2;
+                  punto_uno = this.count_one_start * 1;
+
+                  this.total_puntos = puntos_cinco + puntos_cuatro + puntos_tres + puntos_dos + punto_uno;
+                  this.max_puntos = response.data.length * 5;
+                  
+                    
+                  //PORCENTAJE DE APROBACIÓN
+                  this.porcent_raiting = (this.total_puntos*100)/this.max_puntos;
+                  this.puntos_raiting = (this.porcent_raiting*5)/100;
+
+
+                });
+                this.reviews = response.data;
+                
+              }
+            )
             
             //productos recomendados
             this._guestService.listar_productos_recomendados_publico(this.producto.categoria).subscribe(

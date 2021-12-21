@@ -40,7 +40,12 @@
                     <tr>
                       
                       <th>Titulo</th>
-                      <th>Estado</th>
+                      <th>Estado producto:
+                        <br> 
+                        True = Habilitado
+                        <br>
+                        False = Deshabilitado
+                      </th>
                       <th>Stock</th>
                       <th>Precio</th>
                       <th>Categoria</th>
@@ -102,7 +107,7 @@
                                   aria-hidden="true">x</span></button>
                               </div>
                               <div class="modal-body">
-                                  <p *ngIf="item.habilitado" class="fs-sm">{{item.titulo}}, Desea eliminar este producto?</p>
+                                  <p *ngIf="item.habilitado" class="fs-sm">{{item.titulo}}, Desea dar de baja este producto?</p>
                                   <p *ngIf="!item.habilitado" class="fs-sm">{{item.titulo}}, Desea Habilitar este producto?</p>
                               </div>
                               <div class="modal-footer">

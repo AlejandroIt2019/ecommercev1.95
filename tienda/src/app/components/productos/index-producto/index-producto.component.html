@@ -241,11 +241,11 @@
                       <div class="card-product-widgets-top">
                         <span class="badge product-badge badge-danger" *ngIf="descuento_activo">-{{descuento_activo.descuento}}%</span>
                         <div class="star-rating ml-auto">
+                          <!-- <i class="sr-star cxi-star-filled active"></i>
                           <i class="sr-star cxi-star-filled active"></i>
                           <i class="sr-star cxi-star-filled active"></i>
                           <i class="sr-star cxi-star-filled active"></i>
-                          <i class="sr-star cxi-star-filled active"></i>
-                          <i class="sr-star cxi-star-filled active"></i>
+                          <i class="sr-star cxi-star-filled active"></i> -->
                         </div>
                       </div>
                       <div class="card-product-widgets-bottom">
@@ -259,7 +259,7 @@
                       <div class="d-flex align-items-center" *ngIf="descuento_activo == undefined">
                         <span class="h5 d-inline-block mb-0">$ {{item.precio}} CLP</span>
                       </div>
-
+                      
                       <div class="d-flex align-items-center" *ngIf="descuento_activo != undefined">
                         <span class="h5 d-inline-block text-danger mb-0">$ {{item.precio | descuento: descuento_activo.descuento}} CLP</span>
                         <del class="d-inline-block ml-2 pl-1 text-muted">$ {{item.precio}} CLP</del>
