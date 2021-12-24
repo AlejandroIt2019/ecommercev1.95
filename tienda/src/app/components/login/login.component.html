@@ -60,13 +60,13 @@
                                       </div>
                                       <div class="col-lg-6">
                                           <label for="signin-email">Apellidos completos</label>
-                                          <input type="text" class="form-control"  placeholder="Apellidos completos" required="" name="cliente.apellidos" [(ngModel)]="cliente.apellidos">
+                                          <input type="text" class="form-control"  placeholder="Apellidos completos" required name="cliente.apellidos" [(ngModel)]="cliente.apellidos">
                                       </div>
                                   </div>
                               </div>
                               <div class="form-group">
                                   <label for="signin-email">Email</label>
-                                  <input type="email" class="form-control" placeholder="ejemplo1@gmail.com" required="" name="cliente.email" [(ngModel)]="cliente.email">
+                                  <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="ejemplo1@gmail.com" required name="cliente.email" [(ngModel)]="cliente.email">
                               </div>
                               <div class="form-group">
                                   <label for="signin-password" class="form-label">Contraseña</label>

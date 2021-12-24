@@ -76,7 +76,14 @@ export class LoginComponent implements OnInit {
         },
         error=>{
           console.log(error);
-          
+          iziToast.show({
+            title: 'ERROR',
+            titleColor: '#FF0000',
+            color: '#FFF',
+            class: 'text-danger',
+            position: 'topRight',
+            message: error.error.message
+        });
         }
       );
       
@@ -91,7 +98,22 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  validarEmail(email:string){
+    let pattern = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/
+    return pattern.test(email);
+  }
+
   registro(registroForm:NgForm){
+    if(!this.validarEmail(this.cliente.email)){
+      iziToast.show({
+        title: 'ERROR',
+        titleColor: '#FF0000',
+        class: 'text-danger',
+        position: 'topRight',
+        message: "email invalido"
+      });
+      return
+    }
     if(registroForm.valid){
       
       

@@ -6,7 +6,7 @@ const obtener_config_admin = async function(req,res){
     if(req.user){
         if(req.user.role =='admin'){
 
-            let reg = await Config.findById({_id: "6193f067e755ed0845545714"});
+            let reg = await Config.findById({_id: "61c365703e9fb46a0a2cd6d7"});
             res.status(200).send({data:reg});
                       
         }else{
@@ -32,7 +32,7 @@ const actualiza_config_admin = async function(req,res){
                 var name = img_path.split('\\');
                 var logo_name = name[2];
 
-                let reg = await Config.findByIdAndUpdate({_id: "6193f067e755ed0845545714"},{
+                let reg = await Config.findByIdAndUpdate({_id: "61c365703e9fb46a0a2cd6d7"},{
                     categorias: JSON.parse(data.categorias),
                     titulo: data.titulo,
                     serie: data.serie,
@@ -51,7 +51,7 @@ const actualiza_config_admin = async function(req,res){
 
             }else{
                 console.log('no hay img');
-                let reg = await Config.findByIdAndUpdate({_id: "6193f067e755ed0845545714"},{
+                let reg = await Config.findByIdAndUpdate({_id: "61c365703e9fb46a0a2cd6d7"},{
                     categorias: data.categorias,
                     titulo: data.titulo,
                     serie: data.serie,
@@ -86,7 +86,7 @@ const obtener_logo = async function(req,res){
 //categorias dinamicas
 const obtener_config_publico = async function(req,res){
     
-    let reg = await Config.findById({_id: "6193f067e755ed0845545714"});
+    let reg = await Config.findById({_id: "61c365703e9fb46a0a2cd6d7"});
     res.status(200).send({data:reg});
 }
 

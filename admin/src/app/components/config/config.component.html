@@ -13,6 +13,7 @@
   <div class="card box-shadow-sm">
     <div class="card-header">
         <h5 style="margin-bottom: 0px;">Configuraciones</h5>
+        <p class="text-muted">NOTA: No es necesario un icono, solamente con el titulo ya puede registrar una categoría.</p>
     </div>
 
     <div class="card-body">
@@ -39,7 +40,10 @@
    
           </div>
           <div class="col-md-5">
-            <input class="form-control" type="text" id="text-input" placeholder="Icono" name="icono_cat" [(ngModel)]="icono_cat">
+            <!-- <input class="form-control" type="text" id="text-input" placeholder="Icono" name="icono_cat" [(ngModel)]="icono_cat"> -->
+            <select class="form-control"   name="icono_cat"  [(ngModel)]="icono_cat">
+              <option *ngFor="let icon of iconos" [value]="icon">{{icon}}</option>
+            </select>
           </div>
           <div class="col-md-3">
 
@@ -53,6 +57,7 @@
              
                     <th>Categoria</th>
                     <th>Icono</th>
+                    <th>Estado</th>
                     <th>Eliminar</th>
                    
                   </tr>
@@ -76,8 +81,13 @@
                       <td>
                         <i class="{{item.icono}}"></i> {{item.icono}}
                       </td>
+                      <td >
+                        <span *ngIf="item.habilitado" class="badge bg-primary text-white">Habilitado</span>
+                        <span *ngIf="!item.habilitado" class="badge bg-danger text-white">Deshabilitado</span>
+                      </td>
                       <td>
-                        <a style="cursor: pointer;" class="text-danger" (click)="eliminar_categoria(indice)">[Eliminar]</a>
+                        <a *ngIf="item.habilitado" style="cursor: pointer;" class="text-danger" (click)="eliminar_categoria(indice)">[Deshabilitar]</a>
+                        <a *ngIf="!item.habilitado" style="cursor: pointer;" class="text-success" (click)="eliminar_categoria(indice)">[Habilitar]</a>
                       </td>
                       
                     </tr>

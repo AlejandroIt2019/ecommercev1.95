@@ -6,7 +6,7 @@
           <h3 class="h6 mb-2 pb-1 text-uppercase text-light">Ayuda</h3>
           <ul class="nav nav-light flex-column">
             <li class="nav-item mb-2">
-              <a href="#" class="nav-link mr-lg-0 mr-sm-4 p-0 font-weight-normal">Delivery &amp; Entregas</a>
+              <a [routerLink]="['/infoentrega']" routerLinkActive="router-link-active"  class="nav-link mr-lg-0 mr-sm-4 p-0 font-weight-normal">Delivery &amp; Entregas</a>
             </li>
             <li class="nav-item mb-2">
               <a href="contacts.html" class="nav-link mr-lg-0 mr-sm-4 p-0 font-weight-normal">FAQ</a>
@@ -16,7 +16,7 @@
               <a href="blog.html" class="nav-link mr-lg-0 mr-sm-4 p-0 font-weight-normal">Blog</a>
             </li>
             <li class="nav-item mb-2">
-              <a [routerLink]="['/contacto']" class="nav-link mr-lg-0 mr-sm-4 p-0 font-weight-normal">Contactos</a>
+              <a [routerLink]="['contacto']" class="nav-link mr-lg-0 mr-sm-4 p-0 font-weight-normal">Contactos</a>
             </li>
           </ul>
         </div>

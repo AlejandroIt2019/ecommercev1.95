@@ -45,9 +45,13 @@ actualizar_cliente_admin(id:any,data:any,token:any):Observable<any>{
   return this._http.put(this.url + 'actualizar_cliente_admin/'+id,data,{headers: headers});
 }
 
-eliminar_cliente_admin(id:any,token:any):Observable<any>{
+eliminar_cliente_admin(id:any,habilitado:boolean,token:any):Observable<any>{
   let headers=new HttpHeaders({'Content-Type':'application/json','Authorization':token});
-  return this._http.delete(this.url+'eliminar_cliente_admin/'+id,{headers:headers});
+  let body = 
+    {
+      habilitado
+    }
+  return this._http.delete(this.url+'eliminar_cliente_admin/'+id,{headers:headers,body});
   
 }
 

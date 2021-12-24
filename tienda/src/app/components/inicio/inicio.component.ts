@@ -43,6 +43,11 @@ export class InicioComponent implements OnInit {
               titulo: element.titulo,
               portada: 'assets/img/ecommerce/home/categories/13.jpg'
             });
+          }else if(element.titulo == 'Accesorios'){
+            this.categorias.push({
+              titulo: element.titulo,
+              portada: 'assets/img/ecommerce/home/categories/24.jpg'
+            });
           }
         });
 

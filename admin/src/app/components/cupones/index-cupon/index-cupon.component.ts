@@ -44,15 +44,15 @@ export class IndexCuponComponent implements OnInit {
     )
   }
 
-  eliminar(id:any){
-    this._cuponService.eliminar_cupon_admin(id,this.token).subscribe(
+  eliminar(id:any,habilitado:boolean){
+    this._cuponService.eliminar_cupon_admin(id,habilitado,this.token).subscribe(
       response=>{
         iziToast.show({
           title: 'SUCESS',
           titleColor: '#33FFB2',
           class: 'text-sucess',
           position: 'topRight',
-          message: 'Se eliminó correctamente el cupón'
+          message: 'Se cambio correctamente el Estado del Cupón'
         });
 
         $('#delete-'+id).modal('hide');

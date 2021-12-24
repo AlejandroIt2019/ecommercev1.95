@@ -43,6 +43,7 @@ export class CarritoComponent implements OnInit {
   public dventa: Array<any> = [];
   public error_cupon = '';
   public descuento = 0;
+  public cuponAplicado = false;
 
   public descuento_activo : any  = undefined;
 
@@ -193,14 +194,19 @@ export class CarritoComponent implements OnInit {
     this.subtotal = 0
     if(this.descuento_activo == undefined){
       this.carrito_arr.forEach(element =>{
-        this.subtotal = this.subtotal + parseInt(element.producto.precio);
+        this.subtotal = this.subtotal + parseInt(element.producto.precio)*parseInt(element.cantidad);
         
       });
     }else if(this.descuento_activo != undefined){
       this.carrito_arr.forEach(element =>{
-        let new_precio = Math.round(parseInt(element.producto.precio) - (parseInt(element.producto.precio)*this.descuento_activo.descuento)/100);
-        this.subtotal = this.subtotal + new_precio;
-        
+        //let new_precio = Math.round(parseInt(element.producto.precio) - (parseInt(element.producto.precio)*this.descuento_activo.descuento)/100);
+        //this.subtotal = this.subtotal + new_precio;
+        const cantidad = parseInt(element.cantidad)
+        const precio = parseInt(element.producto.precio)
+        const descuento = this.descuento_activo.descuento/100;
+        const new_precio = (precio*cantidad)-(precio*cantidad)*descuento;
+        // let new_precio = Math.round((parseInt(element.producto.precio)*parseInt(element.cantidad)) - (parseInt(element.producto.precio))*this.descuento_activo.descuento/100);
+        this.subtotal = this.subtotal + Math.round(new_precio);
       });
     }
     
@@ -239,7 +245,7 @@ export class CarritoComponent implements OnInit {
   }
 
   validar_cupon(){
-    if(this.venta.cupon){
+    if(this.venta.cupon && !this.cuponAplicado){
       if(this.venta.cupon.toString().length <= 25){
         
         this._clienteService.validar_cupon_admin(this.venta.cupon,this.token).subscribe(
@@ -254,9 +260,9 @@ export class CarritoComponent implements OnInit {
                 this.descuento = (this.total_pagar * response.data.valor)/100;
                 this.total_pagar = this.total_pagar - this.descuento;
               }
-
+              this.cuponAplicado = true
             }else{
-              this.error_cupon = 'El cupón no se pudo canjear'
+              this.error_cupon = 'El cupón no se pudo canjear o es invalido'
             }
             console.log(response);
             
@@ -266,8 +272,26 @@ export class CarritoComponent implements OnInit {
         this.error_cupon = 'El cupón debe ser menos de 25 caracteres'
       }
     }else{
-      this.error_cupon = 'El cupón no es valido'
+      this.error_cupon = 'El cupón no es valido o ya se aplico un cupon'
     }
+  }
+  limpiarCarrito(){
+    console.log("carrito limpio")
+    this._clienteService.limpiar_carrito_cliente(this.token).subscribe(
+      response=>{
+        iziToast.show({
+          title: 'SUCESS',
+          titleColor: '#33FFB2',
+          class: 'text-sucess',
+          position: 'topRight',
+          message: 'Se elimino el producto del carrito.'
+        });
+        this.init_Data()
+      },
+      error=>{
+        console.log(error)
+      }
+    )
   }
 
   

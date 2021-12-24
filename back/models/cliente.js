@@ -16,6 +16,7 @@ var ClienteSchema = Schema({
     genero: {type: String, required: false},
     f_nacimiento: {type: String, required: false},
     rut: {type: String, required: false},
+    habilitado:{type:Boolean,default:true},
     createdAt:{ type:Date, default:Date.now, require:true}
 
 });

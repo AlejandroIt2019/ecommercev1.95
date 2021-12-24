@@ -112,6 +112,11 @@ export class ClienteService {
       return this._http.delete(this.url + 'eliminar_carrito_cliente/'+id,{headers: headers});
     }
 
+    limpiar_carrito_cliente(token):Observable<any>{
+      let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
+      return this._http.delete(this.url + 'limpiar_carrito_cliente/',{headers: headers});
+    }
+
     registro_direccion_cliente(data,token):Observable<any>{
 
       let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});

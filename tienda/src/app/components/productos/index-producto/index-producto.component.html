@@ -57,12 +57,12 @@
               <div class="form-inline flex-nowrap d-none d-sm-flex mr-3 mr-xl-5">
                 <label for="pager-top" class="font-weight-bold text-nowrap mr-2 pr-1 d-none d-lg-block">Ver</label>
                 <select id="pager-top" class="custom-select" name="pageSize" [(ngModel)]="pageSize">
-                  <option value="6">6</option>
-                  <option value="9">9</option>
-                  <option value="18">18</option>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
                   
                 </select>
-                <span class="font-size-sm text-muted text-nowrap ml-2 d-none d-lg-block">products per page</span>
+                <span class="font-size-sm text-muted text-nowrap ml-2 d-none d-lg-block">Producto por página</span>
               </div>
               <ngb-pagination
                 [(page)]="page"
@@ -140,18 +140,18 @@
                             <input type="radio" name="group1" (change)="buscar_por_categoria()" class="custom-control-input" id="blazers-todos" value="todos" [(ngModel)]="filter_cat_producto">
                             <label for="blazers-todos" class="custom-control-label">
                               <span class="cs-filter-item-text">Todos</span>
-                              <span class="pl-1 text-muted">(20)</span>
+                              <span class="pl-1 text-muted">({{productos.length}})</span>
                             </label>
                           </div>
                         </li>
-
+                        
 
                         <li class="cs-filter-item" *ngFor="let item of config_global.categorias; let indice = index">
                           <div class="custom-control custom-checkbox">
                             <input type="radio" name="group1" (change)="buscar_por_categoria()" class="custom-control-input" id="blazers-{{indice}}" value="{{item.titulo}}" [(ngModel)]="filter_cat_producto">
                             <label for="blazers-{{indice}}" class="custom-control-label">
                               <span class="cs-filter-item-text">{{item.titulo}}</span>
-                              <span class="pl-1 text-muted">(5)</span>
+                              <span class="pl-1 text-muted">{{item.cantidad}}</span>
                             </label>
                           </div>
                         </li>
@@ -178,13 +178,13 @@
                         <div class="d-flex align-items-center mt-3">
                           <div class="w-50">
                             <div class="form-group position-relative mb-0">
-                              <input type="number" class="form-control form-control-sm cs-range-slider-value-min">
+                              <input type="number" [(ngModel)]="min_price" class="form-control form-control-sm cs-range-slider-value-min">
                             </div>
                           </div>
                           <div class="mx-1 px-2 font-size-xs">—</div>
                           <div class="w-50">
                             <div class="form-group position-relative mb-0">
-                              <input type="number" class="form-control form-control-sm cs-range-slider-value-max">
+                              <input type="number" [(ngModel)]="max_price" class="form-control form-control-sm cs-range-slider-value-max">
                             </div>
                           </div>
                         </div>
@@ -192,6 +192,11 @@
                         <div class="row mt-3">
                           <div class="col-12">
                             <button class="btn btn-primary btn-sm btn-block" (click)="buscar_precios()">Filtrar</button>
+                          </div>
+                        </div> 
+                        <div class="row mt-3">
+                          <div class="col-12">
+                            <button class="btn btn-danger btn-sm btn-block" (click)="reiniciar_filtros()">Reiniciar Filtros</button>
                           </div>
                         </div>  
 
@@ -312,9 +317,9 @@
               <div class="form-inline flex-nowrap d-none d-sm-flex mr-3 mr-xl-5 pt-1">
                 <label for="pager-bottom" class="font-weight-bold text-nowrap mr-2 pr-1 d-none d-md-block">Ver</label>
                 <select id="pager-bottom" class="custom-select" name="pageSize" [(ngModel)]="pageSize">
-                  <option value="6">6</option>
-                  <option value="9">9</option>
-                  <option value="18">18</option>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
                   
                 </select>
                 <span class="font-size-sm text-muted text-nowrap ml-2 d-none d-md-block">products per page</span>

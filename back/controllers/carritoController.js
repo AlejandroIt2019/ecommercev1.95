@@ -47,9 +47,29 @@ const eliminar_carrito_cliente = async function(req,res){
     }
 }
 
+const limpiar_carrito_cliente = async function(req,res){
+    if(req.user){
+        console.log(req.user.sub);
+        let id = req.user.sub;
+        //agregar a colección
+        //no productos iguales en el carro
+        let reg
+        try{
+            reg = await Carrito.deleteMany({cliente:id})
+        }catch(e){
+            res.status(500).send(e)
+        }
+        res.status(200).send({data:reg});
+        res.send(req.user.sub);
+    }else{
+        res.status(500).send({message: 'NoAccess'});
+    }
+}
+
 module.exports = {
     agregar_carrito_cliente,
     obtener_carrito_cliente,
-    eliminar_carrito_cliente
+    eliminar_carrito_cliente,
+    limpiar_carrito_cliente
 }
 

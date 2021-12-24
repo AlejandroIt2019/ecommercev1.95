@@ -19,6 +19,12 @@ export class ConfigComponent implements OnInit {
   public config : any = {};
   public url:any;
 
+  public iconos = ["cxi-home",
+  "cxi-eye-closed",
+  "cxi-heart",
+  "cxi-heart-filled ",
+  "cxi-star"]
+
   public titulo_cat = '';
   public icono_cat = '';
   public file: any = undefined;
@@ -50,9 +56,9 @@ export class ConfigComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
+  // && this.icono_cat
   agregar_cat(){
-    if(this.titulo_cat && this.icono_cat){
+    if(this.titulo_cat){
       console.log(uuidv4());
       
       this.config.categorias.push({
@@ -85,7 +91,7 @@ export class ConfigComponent implements OnInit {
 
       }
       console.log(data);
-      this._adminService.actualiza_config_admin("6193f067e755ed0845545714",data,this.token).subscribe(
+      this._adminService.actualiza_config_admin("61c365703e9fb46a0a2cd6d7",data,this.token).subscribe(
         response=>{
           iziToast.show({
             title: 'SUCESS',
@@ -183,7 +189,8 @@ export class ConfigComponent implements OnInit {
   }
 
   eliminar_categoria(idx: any){
-    this.config.categorias.splice(idx,1);
+    // this.config.categorias.splice(idx,1);
+    this.config.categorias[idx].habilitado = !this.config.categorias[idx].habilitado
   }
 
 }

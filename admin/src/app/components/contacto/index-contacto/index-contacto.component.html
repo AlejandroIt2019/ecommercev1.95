@@ -12,6 +12,19 @@
   <div class="card box-shadow-sm">
         <div class="card-header">
             <h5 style="margin-bottom: 0px;">Mensajes recibidos en la Tienda</h5>
+            <div class="text-center">
+              <div class="form-inline flex-nowrap d-none d-sm-flex mr-3 mr-xl-5">
+                <label for="pager-top" class="font-weight-bold text-nowrap mr-2 pr-1 d-none d-lg-block">Ver</label>
+                <select id="pager-top" class="custom-select" name="pageSize" [(ngModel)]="pageSize">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  
+                </select>
+                <span class="font-size-sm text-muted text-nowrap ml-2 d-none d-lg-block">Producto por página</span>
+              </div>
+            </div>
         </div>
         
         <div class="card-body" *ngIf="!load_data">
@@ -37,7 +50,7 @@
                             
                             <div class="d-flex justify-content-between">
                             <a class="nav-link p-0 fs-sm" data-toggle="modal" [attr.data-target]="'#estadoModal-'+item._id" >
-                                <i class="cxi-chat me-2 fs-base align-middle mt-n1"></i>
+                                <i class="cxi-close-round me-2 fs-base align-middle mt-n1"></i>
                                 Cerrar mensaje
                             </a>
 

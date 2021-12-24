@@ -129,13 +129,17 @@ export class NavComponent implements OnInit {
     this.subtotal = 0
     if(this.descuento_activo == undefined){
       this.carrito_arr.forEach(element =>{
-        this.subtotal = this.subtotal + parseInt(element.producto.precio);
+        this.subtotal = this.subtotal + parseInt(element.producto.precio)*parseInt(element.cantidad);
         
       });
     }else if(this.descuento_activo != undefined){
       this.carrito_arr.forEach(element =>{
-        let new_precio = Math.round(parseInt(element.producto.precio) - (parseInt(element.producto.precio)*this.descuento_activo.descuento)/100);
-        this.subtotal = this.subtotal + new_precio;
+        const cantidad = parseInt(element.cantidad)
+        const precio = parseInt(element.producto.precio)
+        const descuento = this.descuento_activo.descuento/100;
+        const new_precio = (precio*cantidad)-(precio*cantidad)*descuento;
+        // let new_precio = Math.round((parseInt(element.producto.precio)*parseInt(element.cantidad)) - (parseInt(element.producto.precio))*this.descuento_activo.descuento/100);
+        this.subtotal = this.subtotal + Math.round(new_precio);
         
       });
     }

@@ -52,7 +52,10 @@
                       <th>Admin</th>
                       <th>Cantidad</th>
                       <th>Proveedor</th>
-                      <th>Fecha</th>
+                      <th>Fecha de ingreso</th>
+                      <th>Precio Unitario</th>
+                      <th>Precio Total</th>
+                      <th>Habilitado</th>
                       <th>OP</th>
                     </tr>
                   </thead>
@@ -74,7 +77,13 @@
                         <td>{{item.admin.nombres}} {{item.admin.apellidos}}</td>
                         <td>{{item.cantidad}} </td>
                         <td>{{item.proveedor}} </td>
-                        <td>{{item.createdAt}} </td>
+                        <td>{{item.createdAt|date}} </td>
+                        <td>{{producto.precio}}</td>
+                        <td>{{producto.precio*item.cantidad}}</td>
+                        <td >
+                          <span *ngIf="item.habilitado" class="badge bg-primary text-white">Habilitado</span>
+                          <span *ngIf="!item.habilitado" class="badge bg-danger text-white">Deshabilitado</span>
+                        </td>
                         <td>
                           <button class="btn btn-danger btn-sm "data-toggle="modal" [attr.data-target]="'#delete-'+item._id">
                             <i class="cxi-delete"></i>
@@ -84,20 +93,20 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Confirmación de eliminación</h4>
+                                  <h4 class="modal-title">Confirmación de {{item.habilitado?'Deshabilitar':'Habilitar'}}</h4>
                                   <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
                                     aria-hidden="true">x</span></button>
                                 </div>
                                 <div class="modal-body">
-                                  <p class="fs-sm">Desea eliminar este producto?</p>
+                                  <p class="fs-sm">Desea {{item.habilitado?'Deshabilitar':'Habilitar'}} este producto?</p>
                                 </div>
                                 <div class="modal-footer">
                                   <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
-                                  <button *ngIf="!load_btn" class="btn btn-primary btn-sm" (click)='eliminar(item._id)' type="button">Sí, eliminar</button>
+                                  <button *ngIf="!load_btn" class="btn btn-primary btn-sm" (click)='eliminar(item._id,!item.habilitado)' type="button">Sí, {{item.habilitado?'Deshabilitar':'Habilitar'}}</button>
                                   <!-- boton precargador-->
                                   <button *ngIf="load_btn" type="button" class="btn btn-secondary" disabled>
                                     <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
-                                    Eliminando...
+                                    {{item.habilitado?'Deshabilitando':'Habilitando'}}...
                                   </button>
                                 </div>
                               </div>

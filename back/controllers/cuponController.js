@@ -78,11 +78,13 @@ const actualizar_cupon_admin = async function(req,res){
 }
 
 const eliminar_cupon_admin = async function(req,res){
+    const {habilitado} = req.body
+    console.log(req.body)
     if(req.user){
         if(req.user.role =='admin'){
 
             var id= req.params['id'];
-            let reg =await Cupon.findByIdAndRemove({_id:id});
+            let reg =await Cupon.findByIdAndUpdate({_id:id},{$set:{habilitado}});
             res.status(200).send({data:reg});
 
                            
@@ -97,7 +99,7 @@ const eliminar_cupon_admin = async function(req,res){
 const validar_cupon_admin = async function(req,res){
     if(req.user){
         var cupon = req.params['cupon'];
-        var data = await Cupon.findOne({codigo:cupon});
+        var data = await Cupon.findOne({codigo:cupon,habilitado:true});
 
         if(data){
             if(data.limite==0){

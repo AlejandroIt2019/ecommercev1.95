@@ -23,7 +23,9 @@
           <div class="col-lg-8 pr-lg-6">
             <div class="d-flex align-items-center justify-content-between pb-2 mb-4">
               <h1 class="mb-0">Detalles</h1>
-              <a [routerLink]="['/productos']" routerLinkActive="router-link-active" ><strong>Regresar a la tienda</strong></a>
+              <a (click)="limpiarCarrito()" class="text-danger"><strong>Cancelar Compra</strong></a>
+              <a [routerLink]="['/productos']" routerLinkActive="router-link-active" ><strong>Seguir comprando</strong></a>
+            
             </div>
 
             <!-- Alert -->
@@ -56,12 +58,12 @@
                         <li class="mb-0"><span class="text-muted">{{item.producto.titulo_variedad}}</span> {{item.variedad}}</li>
                       </ul>
                     </div>
-
+                    
                     <div class="d-flex pr-sm-3" *ngIf="descuento_activo != undefined">
                       <input type="number" class="form-control form-control-sm bg-light mr-3" readonly style="width: 4.5rem;" value="{{item.cantidad}}">
                       <div class="text-nowrap pt-2">
-                       <strong class="text-danger mr-1">$ {{item.producto.precio | descuento:descuento_activo.descuento}}</strong>
-                   <span class="font-size-xs text-muted">${{item.producto.precio}} CLP</span>
+                       <strong class="text-danger mr-1">$ {{item.producto.precio*item.cantidad | descuento:descuento_activo.descuento}}</strong>
+                   <span class="font-size-xs text-muted">${{item.producto.precio*item.cantidad}} CLP</span>
                         </div>
                     </div>
 
@@ -248,6 +250,11 @@
               <label for="ch-notes">Nota</label>
               <textarea id="ch-notes" class="form-control form-control-lg" rows="5" placeholder="Nota de la orden, detalles" name="nota" [(ngModel)]="venta.nota"></textarea>
             </div>
+
+            <div class="d-flex align-items-center justify-content-between pb-2 mb-4">
+              <h5 class="mb-0">Desea volver a los productos?</h5>
+              <a [routerLink]="['/productos']" routerLinkActive="router-link-active" ><strong>Cancelar compra, seguir comprando</strong></a>
+            </div>
           </div>
 
 
@@ -259,9 +266,9 @@
                 <div class="form-group">
                   <label for="promo-code">Aplicar cupón</label>
                   <div class="input-group input-group-lg">
-                    <input type="text" id="promo-code" class="form-control" placeholder="Aplicar cupón" name="cupon" [(ngModel)]="venta.cupon">
+                    <input type="text" id="promo-code" class="form-control" placeholder="Aplicar cupón" name="cupon" [(ngModel)]="venta.cupon" [disabled]="cuponAplicado">
                     <div class="input-group-append">
-                      <button type="button" class="btn btn-primary" (click)="validar_cupon()">&nbsp;&nbsp;Aplicar&nbsp;&nbsp;</button >
+                      <button type="button" class="btn btn-primary" (click)="validar_cupon()" [disabled]="cuponAplicado">&nbsp;&nbsp;Aplicar&nbsp;&nbsp;</button >
                         
                     </div>
                   </div>
@@ -276,9 +283,9 @@
 
 
                 </div>
-                <div class="bg-secondary rounded mb-4">
+                <div class="bg-secondary rounded mb-4" >
                   <div class="border-bottom p-4">
-                    <h2 class="h4 mb-0">Order totals</h2>
+                    <h2 class="h4 mb-0">Total de la orden</h2>
                   </div>
                   <ul class="list-unstyled border-bottom mb-0 p-4">
                     <li class="d-flex justify-content-between mb-2">

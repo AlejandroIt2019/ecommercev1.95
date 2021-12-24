@@ -8,6 +8,7 @@ import { GuestService } from 'src/app/services/guest.service';
 declare var noUiSlider:any;
 declare var $:any;
 declare var iziToast;
+
 @Component({
   selector: 'app-index-producto',
   templateUrl: './index-producto.component.html',
@@ -21,11 +22,13 @@ export class IndexProductoComponent implements OnInit {
   public filter_producto = '';
   public filter_cat_producto = 'todos';
   public url;
+  public min_price=0
+  public max_price=1000000
 
   public load_data = true;
   public route_categoria;
   public page = 1;
-  public pageSize = 9;
+  public pageSize = 5;
 
   public sort_by = 'Defecto'
 
@@ -50,9 +53,13 @@ export class IndexProductoComponent implements OnInit {
     this.url = GLOBAL.url;
     this._clienteService.obtener_config_publico().subscribe(
       response=>{
-        
         this.config_global = response.data;
-        
+        const categorias:Array<any> = []
+      this.config_global.categorias.forEach(cat => {
+        if(cat.habilitado==true)
+          categorias.push(cat)
+      });
+        this.config_global.categorias = [...categorias]
         //console.log(this.config_global); por si algo falla 
       }
     )
@@ -110,7 +117,9 @@ export class IndexProductoComponent implements OnInit {
         }
     })
 
-    slider.noUiSlider.on('update', function (values:any) {
+    slider.noUiSlider.on('update',  (values:any)=> {
+        this.min_price = values[0];
+        this.max_price = values[1];
         $('.cs-range-slider-value-min').val(values[0]);
         $('.cs-range-slider-value-max').val(values[1]);
     });
@@ -184,9 +193,20 @@ export class IndexProductoComponent implements OnInit {
         
       }
     );
+  }
 
-    
-    
+  reiniciar_filtros(){
+    this.filter_producto = ''
+    this.filter_categoria = ''
+    this.filter_cat_producto = ''
+    this._clienteService.listar_productos_publico(this.filter_producto).subscribe(
+      response=>{
+        //console.log(response); por si algo falla
+        this.productos = response.data;
+        
+        this.load_data = false;
+      }
+    );
   }
 
   buscar_por_categoria(){

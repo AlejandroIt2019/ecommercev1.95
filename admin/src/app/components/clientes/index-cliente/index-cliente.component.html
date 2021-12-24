@@ -15,7 +15,7 @@
             <h5 style="margin-bottom: 0px;">Filtro de clientes</h5>
         </div>
         <div class="card-header">
-            <form class="form-inline pt-2">
+            <div class="form-inline pt-2 justify-content-between">
                 <label class="sr-only" for="inline-form-input-name">Apellidos</label>
                   <input class="form-control mb-3 mr-sm-4" (keyup)="filtro('apellidos')" name="filtro_apellidos" [(ngModel)]="filtro_apellidos" type="text" id="inline-form-input-name" placeholder="Apellidos">
                 <label class="sr-only" for="inline-form-input-username">Correo</label>
@@ -24,10 +24,24 @@
                     <div class="input-group-text">@</div>
                 </div>
                   <input class="form-control" type="text" (keyup)="filtro('correo')" name="filtro_correo" [(ngModel)]="filtro_correo" placeholder="Correo">
+                  
                 </div>
-            
+
+                <div class="form-inline flex-nowrap d-none d-sm-flex mr-3 mr-xl-5">
+                  <label for="pager-top" class="font-weight-bold text-nowrap mr-2 pr-1 d-none d-lg-block">Ver</label>
+                  <select id="pager-top" class="custom-select" name="pageSize" [ngModelOptions]="{standalone:true}" [(ngModel)]="pageSize" (ngModelChange)="filterClientes()">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    
+                  </select>
+                  <span class="font-size-sm text-muted text-nowrap ml-2 d-none d-lg-block">Producto por página</span>
+                </div>
+
                 
-            </form>
+                
+              </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -38,6 +52,7 @@
                       <th>Nombres</th>
                       <th>Apellidos</th>
                       <th>Correo</th>
+                      <th>Habilitado</th>
                       <th>Opciones</th>
                     </tr>
                   </thead>
@@ -53,12 +68,16 @@
                   </tbody>
 
                   <ng-container *ngIf="!load_data">
-                    <tbody *ngFor="let item of clientes | slice: (page-1)*pageSize : (page-1) * pageSize + pageSize; let indice=index">
-                      <tr>
+                    <tbody >
+                      <tr *ngFor="let item of clientes | slice: (page-1)*pageSize : (page-1) * pageSize + pageSize; let indice=index">
                         <td>{{indice+1}}</td>
                          <td>{{item.nombres}}</td>
                          <td>{{item.apellidos}}</td>
                          <td>{{item.email}}</td>
+                         <td >
+                          <span *ngIf="item.habilitado" class="badge bg-primary text-white">Habilitado</span>
+                          <span *ngIf="!item.habilitado" class="badge bg-danger text-white">Deshabilitado</span>
+                        </td>
                          <td>
                            <div class="btn-group dropdown">
                                <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -66,7 +85,7 @@
                                </button>
                                <div class="dropdown-menu">
                                  <a class="dropdown-item" [routerLink]="['/panel/clientes',item._id]" >Editar clientes</a>
-                                 <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#delete-'+item._id">Eliminar clientes</a>
+                                 <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#delete-'+item._id">{{item.habilitado?'Deshabilitar':'Habilitar'}} clientes</a>
                                </div>
                             </div>
                            
@@ -75,16 +94,16 @@
                                <div class="modal-dialog modal-dialog-centered" role="document">
                                  <div class="modal-content">
                                    <div class="modal-header">
-                                     <h4 class="modal-title">Eliminar, {{item.nombres}} {{item.apellidos}}</h4>
+                                     <h4 class="modal-title">{{item.habilitado?'Deshabilitar':'Habilitar'}}, {{item.nombres}} {{item.apellidos}}</h4>
                                      <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
                                        aria-hidden="true">x</span></button>
                                    </div>
                                    <div class="modal-body">
-                                     <p class="fs-sm">Desea eliminar este cliente?</p>
+                                     <p class="fs-sm">Desea {{item.habilitado?'Deshabilitar':'Habilitar'}} este cliente?</p>
                                    </div>
                                    <div class="modal-footer">
                                      <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
-                                     <button class="btn btn-primary btn-sm" (click)='eliminar(item._id)' type="button">Sí, eliminar</button>
+                                     <button class="btn btn-primary btn-sm" (click)='eliminar(item._id,!item.habilitado)' type="button">Sí, {{item.habilitado?'Deshabilitar':'Habilitar'}}</button>
                                    </div>
                                  </div>
                                </div>

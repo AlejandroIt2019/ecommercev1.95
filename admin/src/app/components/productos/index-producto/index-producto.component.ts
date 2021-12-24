@@ -107,7 +107,7 @@ export class IndexProductoComponent implements OnInit {
           titleColor: '#33FFB2',
           class: 'text-sucess',
           position: 'topRight',
-          message: 'Se eliminó correctamente el producto'
+          message: 'Se cambio correctamente el Estado del Producto'
         });
 
         $('#delete-'+id).modal('hide');

@@ -5,8 +5,8 @@ import { ClienteService } from 'src/app/services/cliente.service';
 
 
 
-declare var iziToast:any;
-declare var jQuery:any;
+declare var iziToast: any;
+declare var jQuery: any;
 declare var $: any;
 
 @Component({
@@ -16,7 +16,8 @@ declare var $: any;
 })
 export class IndexClienteComponent implements OnInit {
 
-  public clientes : Array<any>=[];
+  public clientes: Array<any> = [];
+  filteredClientes: Array<any> = []
   public filtro_apellidos = '';
   public filtro_correo = '';
 
@@ -32,90 +33,98 @@ export class IndexClienteComponent implements OnInit {
   ) {
     this.token = this._adminService.getToken();
     console.log(this.token);
-    
-   }
+
+  }
 
   ngOnInit(): void {
     this.init_Data();
   }
 
-  init_Data(){
-    this._clienteService.listar_clientes_filtro_admin(null,null,this.token).subscribe(
-      response=>{
-        
+  filterClientes(){
+    console.log("filtering")
+    this.filteredClientes = this.clientes.slice((this.page-1)*this.pageSize,((this.page-1)*this.pageSize)+this.pageSize)
+    console.log(this.filteredClientes)
+  }
+
+  init_Data() {
+    this._clienteService.listar_clientes_filtro_admin(null, null, this.token).subscribe(
+      response => {
+
         this.clientes = response.data;
+        this.filteredClientes = [...this.clientes]
+        this.filterClientes()
         this.load_data = false;
         /* para hacer pruebas precargador
         setTimeout(()=>{
           this.load_data = false;
 
         },3000) */
-        
+
       },
-      error=>{
+      error => {
         console.log(error);
-        
+
       }
     );
   }
 
-  filtro(tipo:any){
+  filtro(tipo: any) {
 
-    if(tipo == 'apellidos'){
-      if(this.filtro_apellidos){
+    if (tipo == 'apellidos') {
+      if (this.filtro_apellidos) {
         this.load_data = true;
-        this._clienteService.listar_clientes_filtro_admin(tipo,this.filtro_apellidos,this.token).subscribe(
-          response=>{
+        this._clienteService.listar_clientes_filtro_admin(tipo, this.filtro_apellidos, this.token).subscribe(
+          response => {
             this.clientes = response.data;
             this.load_data = false;
-            
+
           },
-          error=>{
+          error => {
             console.log(error);
-            
+
           }
         );
-      }else{
+      } else {
         this.init_Data();
       }
-    }else if(tipo == 'correo'){
-      if(this.filtro_correo){
+    } else if (tipo == 'correo') {
+      if (this.filtro_correo) {
         this.load_data = true;
-        this._clienteService.listar_clientes_filtro_admin(tipo,this.filtro_correo,this.token).subscribe(
-          response=>{
+        this._clienteService.listar_clientes_filtro_admin(tipo, this.filtro_correo, this.token).subscribe(
+          response => {
             this.clientes = response.data;
             this.load_data = false;
-    
+
           },
-          error=>{
+          error => {
             console.log(error);
-            
+
           }
         );
-      }else{
+      } else {
         this.init_Data();
       }
     }
 
   }
-  eliminar(id:any){
-    this._clienteService.eliminar_cliente_admin(id,this.token).subscribe(
-      response=>{
+  eliminar(id: any,habilitado:boolean) {
+    this._clienteService.eliminar_cliente_admin(id, habilitado,this.token).subscribe(
+      response => {
         iziToast.show({
           title: 'SUCESS',
           titleColor: '#33FFB2',
           class: 'text-sucess',
           position: 'topRight',
-          message: 'Se eliminó correctamente el cliente'
+          message: 'Se cambió correctamente el estado del Cliente'
         });
 
-        $('#delete-'+id).modal('hide');
+        $('#delete-' + id).modal('hide');
         $('.modal-backdrop').removeClass('show');
         this.init_Data();
       },
-      error=>{
+      error => {
         console.log(error);
-        
+
       }
     )
   }

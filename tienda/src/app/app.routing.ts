@@ -13,6 +13,7 @@ import { ContactoComponent } from "./components/contacto/contacto.component";
 import { IndexOrdenesComponent } from "./components/usuario/ordenes/index-ordenes/index-ordenes.component";
 import { DetalleOrdenComponent } from "./components/usuario/ordenes/detalle-orden/detalle-orden.component";
 import { IndexReviewComponent } from "./components/usuario/reviews/index-review/index-review.component";
+import { InfoentregaComponent } from "./components/footer/infoentrega/infoentrega.component";
 
 const appRoute : Routes = [
     {path: '', component: InicioComponent},
@@ -32,6 +33,10 @@ const appRoute : Routes = [
     {path: 'productos/:slug', component: ShowProductoComponent},
 
     {path: 'contacto', component: ContactoComponent},
+
+    //FOOTER
+    {path: 'infoentrega', component: InfoentregaComponent},
+
     
 ]
 

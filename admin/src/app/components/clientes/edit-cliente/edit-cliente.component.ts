@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AdminService } from 'src/app/services/admin.service';
 import { ClienteService } from 'src/app/services/cliente.service';
+import { ValidarRutService } from 'src/app/services/validar-rut.service';
 
 declare var iziToast:any;
 
@@ -24,7 +25,8 @@ export class EditClienteComponent implements OnInit {
     private _route: ActivatedRoute,
     private _clienteService: ClienteService,
     private _adminService: AdminService,
-    private _router: Router
+    private _router: Router,
+    private _validarRutService:ValidarRutService
   ) { 
     this.token = this._adminService.getToken();
   }
@@ -55,6 +57,16 @@ export class EditClienteComponent implements OnInit {
   }
 
   actualizar(updateForm:any){
+    if(!this._validarRutService.validateRUT(this.cliente.rut)){
+      iziToast.show({
+        title: 'ERROR',
+        titleColor: '#FF0000',
+        class: 'text-danger',
+        position: 'topRight',
+        message: 'Rut no valido'
+      });
+      return
+    }
     if(updateForm.valid){
       this.load_btn = true;
       this._clienteService.actualizar_cliente_admin(this.id,this.cliente, this.token).subscribe(

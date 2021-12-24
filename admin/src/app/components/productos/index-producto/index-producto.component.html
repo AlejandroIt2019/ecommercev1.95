@@ -22,7 +22,23 @@
                     <input class="form-control" type="text" placeholder="Titulo del producto" name="filtro" [(ngModel)]="filtro">
                     <button class="btn btn-primary" type="button" (click)="filtrar()">Filtrar</button>
                     <button class="btn btn-info" type="button" (click)="resetear()">Resetear</button>
+
                     
+                  </div>
+                </div>
+                <div class="col-6  d-flex justify-content-end">
+
+                  
+                  <div class="form-inline flex-nowrap d-none d-sm-flex mr-3 mr-xl-5">
+                    <label for="pager-top" class="font-weight-bold text-nowrap mr-2 pr-1 d-none d-lg-block">Ver</label>
+                    <select id="pager-top" class="custom-select" name="pageSize" [ngModelOptions]="{standalone:true}" [(ngModel)]="pageSize">
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="20">20</option>
+                      <option value="30">30</option>
+                      
+                    </select>
+                    <span class="font-size-sm text-muted text-nowrap ml-2 d-none d-lg-block">Producto por página</span>
                   </div>
                 </div>
                 <!-- ultimo div creado33 -->
@@ -40,12 +56,8 @@
                     <tr>
                       
                       <th>Titulo</th>
-                      <th>Estado producto:
-                        <br> 
-                        True = Habilitado
-                        <br>
-                        False = Deshabilitado
-                      </th>
+                      
+                      <th>Estado producto</th>
                       <th>Stock</th>
                       <th>Precio</th>
                       <th>Categoria</th>
@@ -75,7 +87,10 @@
                             {{item.titulo}}
                           </h6>
                         </td>
-                        <td>{{item.habilitado}}</td>
+                        <td >
+                          <span *ngIf="item.habilitado" class="badge bg-primary text-white">Habilitado</span>
+                          <span *ngIf="!item.habilitado" class="badge bg-danger text-white">Deshabilitado</span>
+                        </td>
                         <td>{{item.stock}}</td>
                         <td>{{item.precio}}</td>
                         <td>{{item.categoria}}</td>
@@ -87,7 +102,8 @@
                             </button>
                             <div class="dropdown-menu">
                               <a class="dropdown-item" [routerLink]="['/panel/productos',item._id]" >Editar producto</a>
-                              <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#delete-'+item._id">Eliminar producto</a>
+                              
+                              <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#delete-'+item._id">Deshabilitar|Habilitar Producto</a>
                               <a class="dropdown-item" [routerLink]="['/panel/productos/inventario',item._id]" >Inventario</a>
                               <a class="dropdown-item" [routerLink]="['/panel/productos/variedades',item._id]" >Variedades</a>
                               <a class="dropdown-item" [routerLink]="['/panel/productos/galeria',item._id]" >Galeria</a>

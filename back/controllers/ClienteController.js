@@ -58,6 +58,10 @@ const login_cliente = async function(req,res){
 
     }else{
         let user = cliente_arr[0];
+        if(user.habilitado===false){
+            return res.status(400).send({message:"usuario deshabilitado"})
+        }
+        
         
         bcrypt.compare(data.password, user.password, async function(error,check){
             if(check){
@@ -183,11 +187,13 @@ const actualizar_cliente_admin = async function(req,res){
 }
 
 const eliminar_cliente_admin = async function(req,res){
+    const {habilitado} = req.body
+    console.log(req.body)
     if(req.user){
         if(req.user.role =='admin'){
 
             var id= req.params['id'];
-            let reg =await Cliente.findByIdAndRemove({_id:id});
+            let reg =await Cliente.findByIdAndUpdate({_id:id},{$set:{habilitado}});
             res.status(200).send({data:reg});
 
                            

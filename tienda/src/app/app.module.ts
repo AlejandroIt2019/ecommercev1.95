@@ -26,6 +26,7 @@ import { ContactoComponent } from './components/contacto/contacto.component';
 import { IndexOrdenesComponent } from './components/usuario/ordenes/index-ordenes/index-ordenes.component';
 import { DetalleOrdenComponent } from './components/usuario/ordenes/detalle-orden/detalle-orden.component';
 import { IndexReviewComponent } from './components/usuario/reviews/index-review/index-review.component';
+import { InfoentregaComponent } from './components/footer/infoentrega/infoentrega.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { IndexReviewComponent } from './components/usuario/reviews/index-review/
     ContactoComponent,
     IndexOrdenesComponent,
     DetalleOrdenComponent,
-    IndexReviewComponent
+    IndexReviewComponent,
+    InfoentregaComponent
   ],
   imports: [
     BrowserModule,
